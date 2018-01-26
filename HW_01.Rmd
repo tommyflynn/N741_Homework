@@ -1,8 +1,10 @@
 ---
-title: "NRSG 741: HW_01"
+title: 'NRSG 741: HW_01'
 author: "TommY"
 date: "1/26/2018"
 output:
+  word_document: default
+  pdf_document: default
   html_document: default
 ---
 Click link for [GitHub Repository](https://github.com/tommyflynn/N741_Homework.git)
