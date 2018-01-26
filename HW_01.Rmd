@@ -1,24 +1,35 @@
 ---
-title: "HW_01"
+title: "NRSG 741: HW_01"
 author: "TommY"
 date: "1/26/2018"
 output:
   html_document: default
 ---
-Link to [GitHub Repository](https://github.com/tommyflynn/N741_Homework.git)
-```{r setup, include=TRUE}
+Click link for [GitHub Repository](https://github.com/tommyflynn/N741_Homework.git)
+```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 library(gapminder)
+library(ggplot2)
 ```
-## Task One
-The mean life expectancy is <round(mean(gapminder$lifeExp), digits = 2)>
-```{r}
-lexp_mean <- round(mean(gapminder$lifeExp), digits = 2)
-lexp_mean
-lexp_sd <- round(sd(gapminder$lifeExp), digits = 2)
-lexp_med <- round(median(gapminder$lifeExp), digits = 2)
-lexp_sample <- length(gapminder$lifeExp)
-```
-years (standard deviation = ```lexp_sd```, median = ```lexp_med```, and the sample size is ```lexp_sample```)
+# Task One:
+The mean life expectancy is `r round(mean(gapminder$lifeExp), digits = 2)` years,
+with a standard deviation of `r round(sd(gapminder$lifeExp), digits = 2)`, median of `r round(median(gapminder$lifeExp), digits = 2)`, and sample size of `r length(gapminder$lifeExp)`.
 
 
+#Task Two:
+```{r, results='asis'}
+library(knitr)
+lexp_med <- aggregate(lifeExp ~ continent, gapminder, median)
+kable(lexp_med[1:5,], digits = 2, caption = "Median life expectancy by continent")
+
+lexp_sd <- aggregate(lifeExp ~ continent, gapminder, sd)
+kable(lexp_sd[1:5,], digits = 2, caption = "Standard deviation of life expectancy by continent")
+
+lexp_mean <- aggregate(lifeExp ~ continent, gapminder, mean)
+kable(lexp_mean[1:5,], digits = 2, caption = "Mean life expectancy by continent")
+```
+
+
+
+**Citation**: Jennifer Bryan (2017). gapminder: Data from Gapminder. R package version 0.3.0.
+https://CRAN.R-project.org/package=gapminder
