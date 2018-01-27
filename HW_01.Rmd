@@ -1,17 +1,19 @@
 ---
 title: 'NRSG 741: HW_01'
-author: "TommY"
+author: "TommY Flynn"
 date: "1/26/2018"
 output:
-  word_document: default
-  pdf_document: default
   html_document: default
+  pdf_document: default
+  word_document: default
 ---
 Click link for [GitHub Repository](https://github.com/tommyflynn/N741_Homework.git)
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 library(gapminder)
 library(ggplot2)
+library(dplyr)
+library(knitr)
 ```
 # Task One:
 The mean life expectancy is `r round(mean(gapminder$lifeExp), digits = 2)` years,
@@ -20,11 +22,10 @@ with a standard deviation of `r round(sd(gapminder$lifeExp), digits = 2)`, media
 
 #Task Two:
 ```{r, echo = FALSE}
-library(knitr)
-library(dplyr)
-gapminder %>% 
+kable(gapminder %>% 
   group_by(continent) %>%
   summarise(LE_median = median(lifeExp), LE_sd = sd(lifeExp), LE_mean = mean(lifeExp))
+)
 ```
 
 
