@@ -15,12 +15,12 @@ library(ggplot2)
 library(dplyr)
 library(knitr)
 ```
-###Task One:
+##Task One:
 The mean life expectancy is `r round(mean(gapminder$lifeExp), digits = 2)` years,
 with a standard deviation of `r round(sd(gapminder$lifeExp), digits = 2)`, median of `r round(median(gapminder$lifeExp), digits = 2)`, and sample size of `r length(gapminder$lifeExp)`.[^1]
 
 
-###Task Two:
+##Task Two:
 ```{r, echo = FALSE}
 kable(gapminder %>% 
   group_by(Continent = continent) %>%
@@ -28,7 +28,27 @@ kable(gapminder %>%
 )
 ```
 
-#Task Three:
+##Task Three:
+####Life Expectancy by Continent
+```{r}
+contXlife <- ggplot(gapminder, aes(x = continent, y = lifeExp))
+contXlife + geom_boxplot(fill = "yellow", colour = "blue", outlier.colour = "hotpink") +
+  geom_jitter(position = position_jitter(width = 0.1, height = 0), alpha = 1/4)
+```
+####Gross Domestic Product by Continent
+```{r}
+contXgdp <- ggplot(gapminder, aes(x = continent, y = gdpPercap))
+contXgdp + geom_boxplot(fill = "hotpink", colour = "yellow", outlier.colour = "blue") +
+  geom_jitter(position = position_jitter(width = 0.1, height = 0), alpha = 1/4)
+```
+####Population by Continent
+```{r}
+contXpop <- ggplot(gapminder, aes(x = continent, y = pop))
+contXpop + geom_boxplot(fill = "black", colour = "red", outlier.colour = "yellow") +
+  geom_jitter(position = position_jitter(width = 0.1, height = 0), alpha = 1/4)
+```
+
+##Task Four:
 
 **References**
 [^1]: Jennifer Bryan (2017). gapminder: Data from Gapminder. R package version 0.3.0.
