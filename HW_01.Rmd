@@ -3,8 +3,8 @@ title: 'NRSG 741: HW_01'
 author: "TommY Flynn"
 date: "1/26/2018"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
   word_document: default
 ---
 GitHub Repository @ [https://github.com/tommyflynn/N741_Homework.git](https://github.com/tommyflynn/N741_Homework.git)
@@ -29,27 +29,25 @@ kable(gapminder %>%
 ```
 
 ##Task Three:
-```{r, echo = TRUE}
+```{r Boxplot of life expectancy by continent, echo = TRUE}
 contXlife <- ggplot(gapminder, aes(x = continent, y = lifeExp))
 contXlife + geom_boxplot(fill = "yellow", colour = "blue", outlier.colour = "hotpink") +
   geom_jitter(position = position_jitter(width = 0.1, height = 0), alpha = 1/4)
 ```
-####Boxplot of Life Expectancy by Continent    
-
-```{r, echo = TRUE}
+####Boxplot of Life Expectancy by Continent:  
+```{r Boxplot of GDP per capita by Continent, echo=TRUE}
 contXgdp <- ggplot(gapminder, aes(x = continent, y = gdpPercap))
 contXgdp + geom_boxplot(fill = "hotpink", colour = "yellow", outlier.colour = "blue") +
   geom_jitter(position = position_jitter(width = 0.1, height = 0), alpha = 1/4)
 ```
-####Boxplot of Gross Domestic Product by Continent  
-
-```{r, echo = TRUE}
-contXpop <- ggplot(gapminder, aes(x = continent, y = pop))
+####Boxplot of Per Capita GDP by Continent  
+```{r Boxplot of population by cotninent, echo = TRUE}
+contXpop <- ggplot(gapminder, aes(x = continent, y = pop)) 
 contXpop + geom_boxplot(fill = "black", colour = "red", outlier.colour = "yellow") +
   geom_jitter(position = position_jitter(width = 0.1, height = 0), alpha = 1/4)
+
 ```
-####Boxplot of Population by Continent    
-    
+###Boxplot of Population by Continent  
 ##Task Four:
 ```{r, echo = TRUE}
 colorful_gap <-
@@ -60,6 +58,7 @@ Continents <- with(colorful_gap, continent %in% c("Americas", "Asia") & year == 
 plot(lifeExp ~ gdpPercap, colorful_gap, subset = Continents, log = "x", pch = 21, cex = sqrt(colorful_gap$pop[Continents]/pi)/1500, bg = colorful_gap$cc[Continents])
 ```
 ####Scatterplot of Countries in the Americas & Asia by Life Expectancy and GDP (node size scaled to population) from 1992  
+####Scatterplot of Countries in the Americas & Asia by life expectancy and GDP per capita (node size scaled to population) in the year 1992
 
 **References**  
 1. Jennifer Bryan (2017). gapminder: Data from Gapminder. R package version 0.3.0.
