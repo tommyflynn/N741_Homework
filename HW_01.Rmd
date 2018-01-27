@@ -15,20 +15,21 @@ library(ggplot2)
 library(dplyr)
 library(knitr)
 ```
-# Task One:
+###Task One:
 The mean life expectancy is `r round(mean(gapminder$lifeExp), digits = 2)` years,
-with a standard deviation of `r round(sd(gapminder$lifeExp), digits = 2)`, median of `r round(median(gapminder$lifeExp), digits = 2)`, and sample size of `r length(gapminder$lifeExp)`.
+with a standard deviation of `r round(sd(gapminder$lifeExp), digits = 2)`, median of `r round(median(gapminder$lifeExp), digits = 2)`, and sample size of `r length(gapminder$lifeExp)`.[^1]
 
 
-#Task Two:
+###Task Two:
 ```{r, echo = FALSE}
 kable(gapminder %>% 
-  group_by(continent) %>%
-  summarise(LE_median = median(lifeExp), LE_sd = sd(lifeExp), LE_mean = mean(lifeExp))
+  group_by(Continent = continent) %>%
+  summarise(LE_median = median(lifeExp), LE_sd = sd(lifeExp), LE_mean = mean(lifeExp)), caption = "Life Expectancy by Continent: Summary Statistics"
 )
 ```
 
+#Task Three:
 
-
-**Citation**: Jennifer Bryan (2017). gapminder: Data from Gapminder. R package version 0.3.0.
+**References**
+[^1]: Jennifer Bryan (2017). gapminder: Data from Gapminder. R package version 0.3.0.
 https://CRAN.R-project.org/package=gapminder
