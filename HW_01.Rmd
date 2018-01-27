@@ -9,18 +9,18 @@ output:
 ---
 GitHub Repository @ [https://github.com/tommyflynn/N741_Homework.git](https://github.com/tommyflynn/N741_Homework.git)
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE)
 library(gapminder)
 library(ggplot2)
 library(dplyr)
 library(knitr)
 ```
-##Task One:
+## Task One:
 The mean life expectancy is `r round(mean(gapminder$lifeExp), digits = 2)` years,
 with a standard deviation of `r round(sd(gapminder$lifeExp), digits = 2)`, median of `r round(median(gapminder$lifeExp), digits = 2)`, and sample size of `r length(gapminder$lifeExp)`.
 
 
-##Task Two:
+## Task Two:
 ```{r, echo = TRUE}
 kable(gapminder %>% 
   group_by(Continent = continent) %>%
@@ -28,27 +28,28 @@ kable(gapminder %>%
 )
 ```
 
-##Task Three:
-```{r Boxplot of life expectancy by continent, echo = TRUE}
+##Task Three:  
+```{r , echo = TRUE}
 contXlife <- ggplot(gapminder, aes(x = continent, y = lifeExp))
 contXlife + geom_boxplot(fill = "yellow", colour = "blue", outlier.colour = "hotpink") +
   geom_jitter(position = position_jitter(width = 0.1, height = 0), alpha = 1/4)
 ```
-####Boxplot of Life Expectancy by Continent:  
-```{r Boxplot of GDP per capita by Continent, echo=TRUE}
+####    Boxplot of Life Expectancy by Continent     
+```{r, echo=TRUE}
 contXgdp <- ggplot(gapminder, aes(x = continent, y = gdpPercap))
 contXgdp + geom_boxplot(fill = "hotpink", colour = "yellow", outlier.colour = "blue") +
   geom_jitter(position = position_jitter(width = 0.1, height = 0), alpha = 1/4)
 ```
-####Boxplot of Per Capita GDP by Continent  
-```{r Boxplot of population by cotninent, echo = TRUE}
+####    Boxplot of Per Capita GDP by Continent  
+```{r, echo = TRUE}
 contXpop <- ggplot(gapminder, aes(x = continent, y = pop)) 
 contXpop + geom_boxplot(fill = "black", colour = "red", outlier.colour = "yellow") +
   geom_jitter(position = position_jitter(width = 0.1, height = 0), alpha = 1/4)
 
 ```
-###Boxplot of Population by Continent  
-##Task Four:
+####    Boxplot of Population by Continent
+
+## Task Four:
 ```{r, echo = TRUE}
 colorful_gap <-
   data.frame(gapminder,
@@ -57,9 +58,8 @@ colorful_gap <-
 Continents <- with(colorful_gap, continent %in% c("Americas", "Asia") & year == 1992)
 plot(lifeExp ~ gdpPercap, colorful_gap, subset = Continents, log = "x", pch = 21, cex = sqrt(colorful_gap$pop[Continents]/pi)/1500, bg = colorful_gap$cc[Continents])
 ```
-####Scatterplot of Countries in the Americas & Asia by Life Expectancy and GDP (node size scaled to population) from 1992  
-####Scatterplot of Countries in the Americas & Asia by life expectancy and GDP per capita (node size scaled to population) in the year 1992
+####    Scatterplot of Countries in the Americas & Asia by Life Expectancy and GDP (node size scaled to population) from 1992    
 
-**References**  
+**References**    
 1. Jennifer Bryan (2017). gapminder: Data from Gapminder. R package version 0.3.0.
 https://CRAN.R-project.org/package=gapminder
