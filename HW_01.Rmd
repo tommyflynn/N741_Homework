@@ -19,16 +19,12 @@ with a standard deviation of `r round(sd(gapminder$lifeExp), digits = 2)`, media
 
 
 #Task Two:
-```{r, results='asis'}
+```{r, echo = FALSE}
 library(knitr)
-lexp_med <- aggregate(lifeExp ~ continent, gapminder, median)
-kable(lexp_med[1:5,], digits = 2, caption = "Median life expectancy by continent")
-
-lexp_sd <- aggregate(lifeExp ~ continent, gapminder, sd)
-kable(lexp_sd[1:5,], digits = 2, caption = "Standard deviation of life expectancy by continent")
-
-lexp_mean <- aggregate(lifeExp ~ continent, gapminder, mean)
-kable(lexp_mean[1:5,], digits = 2, caption = "Mean life expectancy by continent")
+library(dplyr)
+gapminder %>% 
+  group_by(continent) %>%
+  summarise(LE_median = median(lifeExp), LE_sd = sd(lifeExp), LE_mean = mean(lifeExp))
 ```
 
 
