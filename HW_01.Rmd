@@ -51,7 +51,7 @@ contXpop + geom_boxplot(fill = "black", colour = "red", outlier.colour = "yellow
   labs(x="Continent", y="Population", title="Boxplot of Population by Continent")
 
 ```
-
+ 
 ## Task Four:  
 **Scatterplot of countries in Asia and the Americas according to per capita GDP and life expectancy (country nodes scaled to population)**  
 ```{r, echo = TRUE}
