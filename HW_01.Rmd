@@ -3,8 +3,8 @@ title: 'NRSG 741: HW_01'
 author: "TommY Flynn"
 date: "1/26/2018"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
   word_document: default
 ---
 GitHub Repository @ [https://github.com/tommyflynn/N741_Homework.git](https://github.com/tommyflynn/N741_Homework.git)
@@ -38,10 +38,10 @@ contXlife + geom_boxplot(fill = "yellow", colour = "blue", outlier.colour = "hot
 ```
   
 ```{r, echo=TRUE}
-contXgdp <- ggplot(gapminder, aes(x = continent, y = gdpPercap))
+contXgdp <- ggplot(gapminder, aes(x = continent, y = log(gdpPercap)))
 contXgdp + geom_boxplot(fill = "hotpink", colour = "yellow", outlier.colour = "blue") +
   geom_jitter(position = position_jitter(width = 0.1, height = 0), alpha = 1/4) + 
-  labs(x="Continent", y="GDP per capita", title="Boxplot of Per Capita GDP by Continent")
+  labs(x="Continent", y="LogGDP per capita", title="Boxplot of Per Capita GDP by Continent")
 ```
     
 ```{r, echo = TRUE}
