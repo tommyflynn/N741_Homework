@@ -1,25 +1,39 @@
 ---
-title: N741 Homework 2
+title: Short Paper
 author:
-  - name: Tommy Flynn
-    email: tjflynn@emory.edu
-    affiliation: Emory University School of Nursing
+  - name: Alice Anonymous
+    email: alice@example.com
+    affiliation: Some Institute of Technology
+    footnote: Corresponding Author
+  - name: Bob Security
+    email: bob@example.com
+    affiliation: Another University
+address:
+  - code: Some Institute of Technology
+    address: Department, Street, City, State, Zip
+  - code: Another University
+    address: Department, Street, City, State, Zip
+abstract: |
+  This is the abstract.
 
-bibliography: n741hw02_refs.bib
+  It consists of two paragraphs.
+
+bibliography: mybibfile.bib
 output: rticles::elsevier_article
 ---
 
-Question 1
-==========
+_Text based on elsarticle sample manuscript, see [http://www.elsevier.com/author-schemas/latex-instructions#elsarticle](http://www.elsevier.com/author-schemas/latex-instructions#elsarticle)_
 
-#### What kind of R object is the Davis dataset?
-```{r installation, echo=FALSE}
-library(car)
-library(quantreg)
-library(tidyverse)
-davis <- car::Davis
-```
-The Davis dataset is of the `class(davis)` R object class.
+
+The Elsevier article class
+==========================
+
+#### Installation
+
+If the document class *elsarticle* is not available on your computer,
+you can download and install the system package *texlive-publishers*
+(Linux) or install the LaTeX package *elsarticle* using the package
+manager of your TeX installation, which is typically TeX Live or MikTeX.
 
 #### Usage
 

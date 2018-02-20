@@ -1,0 +1,61 @@
+---
+title: "Homework 2: NRSG 741"
+author:
+  - name: Tommy Flynn
+    email: tjflynn@emory.edu
+    affiliation: Emory University
+    footnote: Corresponding Author
+address:
+  - code: Emory University
+    address: Emory School of Nursing 1520 Clifton Rd Atlanta GA 30322
+Assignment: |
+  This assignment applies the dplyr and ggplot2 packages to work with the Davis dataset in the car package, which contains data on the measured and reported heights and weights of men and women engagedin regular exercise.
+
+bibliography: mybibfile.bib
+output: rticles::elsevier_article
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(tidy = TRUE)
+knitr::opts_chunk$set(warnings = TRUE)
+knitr::opts_chunk$set(message = TRUE)
+car::Davis
+library(tidyverse)
+library(car)
+library(janitor)
+car::Davis
+davis <- Davis
+```
+##### 1. What kind of R object is the Davis dataset?
+> Answer: The Davis dataset is the "`r paste(class(davis))`" class of R object.
+
+##### 2. How many observations are in the Davis dataset?
+> Answer: There are `r paste(count(davis))` observations. 
+
+
+##### 3. For reported weight, how many observations have a missing value?
+
+```{r missing, echo=FALSE}
+```
+
+Must haves for any exploratory data analysis
+============================================
+-Five number summaries (mean, median, min, max, q1, q3)
+-Histograms
+-Line charts
+-Box and whisker plots
+-Pairwise scatterplot matrices
+
+Bibliography styles
+===================
+
+There are various bibliography styles available. You can select the
+style of your choice in the preamble of this document. These styles are
+Elsevier styles based on standard styles like Harvard and Vancouver.
+Please use BibTeX to generate your bibliography and include DOIs
+whenever available.
+
+Here are two sample references: @Feynman1963118 [@Dirac1953888].
+
+References {#references .unnumbered}
+==========
