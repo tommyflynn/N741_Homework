@@ -8,24 +8,23 @@ author:
 address:
   - code: Emory University
     address: Emory School of Nursing 1520 Clifton Rd Atlanta GA 30322
-Assignment: |
-  This assignment applies the dplyr and ggplot2 packages to work with the Davis dataset in the car package, which contains data on the measured and reported heights and weights of men and women engagedin regular exercise.
+abstract:  |
+  This assignment applies the dplyr and ggplot2 packages to work with the   Davis dataset in the car package, which contains data on the measured   and reported heights and weights of men and women engagedin regular exercise. The associated GitHub repository can be found at <https://github.com/tommyflynn/N741_Homework/tree/master/Flynn_HW_02>.
 
-bibliography: mybibfile.bib
-output: rticles::elsevier_article
+output: 
+  rticles::elsevier_article:
+    latex_engine: xelatex
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(tidy = TRUE)
 knitr::opts_chunk$set(warnings = TRUE)
 knitr::opts_chunk$set(message = TRUE)
-car::Davis
 library(tidyverse)
 library(car)
 library(quantreg)
 library(janitor)
-car::Davis
-davis <- Davis
+davis <- car::Davis
 ```
 ##### 1. What kind of R object is the Davis dataset?
 > Answer: The Davis dataset is the "`r paste(class(davis))`" class of R object.
@@ -33,7 +32,7 @@ davis <- Davis
 ##### 2. How many observations are in the Davis dataset?
 > Answer: There are `r paste(count(davis))` observations. 
 
-```{r missing, echo=FALSE}
+```{r missing}
 #Use the is.na function to filter non-missing values from the repwt variable
 repmissing <- filter(davis, is.na(repwt))
 #count(repmissing)
@@ -41,26 +40,33 @@ repmissing <- filter(davis, is.na(repwt))
 ##### 3. For reported weight, how many observations have a missing value?
 > Answer: Reported weight has `r count(repmissing)` missing values
 
+##### 4. How many observations have missing values?
+```{r complete obs}
+#HINT: find the complete rows...
+completeobs <- count(na.omit(davis))
+```
+> Answer: The Davis dataset has `r completeobs` complete observations.
+
+##### 5. Create a subset containing only females. How many females are in this subset?
+```{r female subset}
+femaleset <- davis %>%
+  subset(sex == "F")
+```
+> Answer: A subset containing only females from the Davis data has `r count(femaleset)` observations. 
+
+##### 6. What is the average BMI for these individuals?
+```{r, unit transformation}
+davisBMI <- davis %>%
+  mutate(sqrmetHT = (height/100)*(height/100)) %>%
+  mutate(BMI = weight/sqrmetHT) %>% 
+  mutate(BMIclass = if_else(BMI < 18.5, "Underweight", 
+                            if_else(BMI < 25.0, "Normal",
+                                    if_else(BMI < 30, "Overweight",
+                                            "Obese", "Missing"), 
+                                    "Missing")))
+#mean(davisBMI$BMI)
+```
+> Answer: The mean BMI is `r mean(davisBMI$BMI)`.
 
 
-Must haves for any exploratory data analysis
-============================================
--Five number summaries (mean, median, min, max, q1, q3)
--Histograms
--Line charts
--Box and whisker plots
--Pairwise scatterplot matrices
 
-Bibliography styles
-===================
-
-There are various bibliography styles available. You can select the
-style of your choice in the preamble of this document. These styles are
-Elsevier styles based on standard styles like Harvard and Vancouver.
-Please use BibTeX to generate your bibliography and include DOIs
-whenever available.
-
-Here are two sample references: @Feynman1963118 [@Dirac1953888].
-
-References {#references .unnumbered}
-==========
