@@ -22,6 +22,7 @@ knitr::opts_chunk$set(message = TRUE)
 car::Davis
 library(tidyverse)
 library(car)
+library(quantreg)
 library(janitor)
 car::Davis
 davis <- Davis
@@ -32,13 +33,15 @@ davis <- Davis
 ##### 2. How many observations are in the Davis dataset?
 > Answer: There are `r paste(count(davis))` observations. 
 
-
-##### 3. For reported weight, how many observations have a missing value?
-> Answer: Reported weight has `r na.
-
 ```{r missing, echo=FALSE}
-
+#Use the is.na function to filter non-missing values from the repwt variable
+repmissing <- filter(davis, is.na(repwt))
+#count(repmissing)
 ```
+##### 3. For reported weight, how many observations have a missing value?
+> Answer: Reported weight has `r count(repmissing)` missing values
+
+
 
 Must haves for any exploratory data analysis
 ============================================
