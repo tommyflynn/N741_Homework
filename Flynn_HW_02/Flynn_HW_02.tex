@@ -142,36 +142,36 @@
   
  \end{frontmatter}
 
-\subparagraph{1. What kind of R object is the Davis
-dataset?}\label{what-kind-of-r-object-is-the-davis-dataset}
+\section{Using dplyr}\label{using-dplyr}
+
+\subsection{Questions 1 \& 2:}\label{questions-1-2}
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\CommentTok{# 1. What kind of R object is the Davis dataset?}
 \NormalTok{davis <-}\StringTok{ }\NormalTok{car::Davis}
-\CommentTok{# to print class inline, use `r paste(class(davis))` Q2: to print number of}
+\CommentTok{# to print class inline, use `r paste(class(davis))`}
+
+\CommentTok{# 2. How many observations are in the Davis dataset? Q2: to print number of}
 \CommentTok{# observations, use `r count(davis)`}
 \end{Highlighting}
 \end{Shaded}
 
 \begin{quote}
-Answer: The Davis dataset is the ``data.frame'' class of R object.
+Answer 1: The Davis dataset is the ``data.frame'' class of R object.
 \end{quote}
-
-\subparagraph{2. How many observations are in the Davis
-dataset?}\label{how-many-observations-are-in-the-davis-dataset}
 
 \begin{quote}
-Answer: There are 200 observations.
+Answer 2: There are 200 observations.
 \end{quote}
 
-\subparagraph{3. For reported weight, how many observations have a
-missing
-value?}\label{for-reported-weight-how-many-observations-have-a-missing-value}
+\subsection{Question 3:}\label{question-3}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# Use the is.na function to filter non-missing values from the repwt}
-\CommentTok{# variable, then show inline with `r count(repmissing)`}
+\CommentTok{# 3. For reported weight, how many observations have a missing value? Use}
+\CommentTok{# the is.na function to filter non-missing values from the repwt variable,}
+\CommentTok{# then show inline with `r count(repmissing)`}
 \NormalTok{repmissing <-}\StringTok{ }\KeywordTok{filter}\NormalTok{(davis, }\KeywordTok{is.na}\NormalTok{(repwt))}
 \end{Highlighting}
 \end{Shaded}
@@ -180,12 +180,12 @@ value?}\label{for-reported-weight-how-many-observations-have-a-missing-value}
 Answer: Reported weight has 17 missing values
 \end{quote}
 
-\subparagraph{4. How many observations have missing
-values?}\label{how-many-observations-have-missing-values}
+\subsection{Question 4:}\label{question-4}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# HINT: find the complete rows... then show inline with `r completeobs`}
+\CommentTok{# 4. How many observations have missing values? HINT: find the complete}
+\CommentTok{# rows... then show inline with `r completeobs`}
 \NormalTok{completeobs <-}\StringTok{ }\KeywordTok{count}\NormalTok{(}\KeywordTok{na.omit}\NormalTok{(davis))}
 \end{Highlighting}
 \end{Shaded}
@@ -194,13 +194,12 @@ values?}\label{how-many-observations-have-missing-values}
 Answer: The Davis dataset has 181 complete observations.
 \end{quote}
 
-\subparagraph{5. Create a subset containing only females. How many
-females are in this
-subset?}\label{create-a-subset-containing-only-females.-how-many-females-are-in-this-subset}
+\subsection{Question 5:}\label{question-5}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# create a subset of all female obs, print #obs inline with `r}
+\CommentTok{# 5. Create a subset containing only females. How many females are in this}
+\CommentTok{# subset? create a subset of all female obs, print #obs inline with `r}
 \CommentTok{# count(femaleset)}
 \NormalTok{femaleset <-}\StringTok{ }\NormalTok{davis %>%}\StringTok{ }\KeywordTok{subset}\NormalTok{(sex ==}\StringTok{ "F"}\NormalTok{)}
 \end{Highlighting}
@@ -211,13 +210,13 @@ Answer: A subset containing only females from the Davis data has 112
 observations.
 \end{quote}
 
-\subparagraph{6. What is the average BMI for these
-individuals?}\label{what-is-the-average-bmi-for-these-individuals}
+\subsection{Question 6:}\label{question-6}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# create a new data.fram with height unit transformation (cm -> m),}
-\CommentTok{# calculated BMI, and categorized BMI.}
+\CommentTok{# 6. What is the average BMI for these individuals? create a new data.fram}
+\CommentTok{# with height unit transformation (cm -> m), calculated BMI, and categorized}
+\CommentTok{# BMI.}
 \NormalTok{davisBMI <-}\StringTok{ }\NormalTok{davis %>%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{sqrmetHT =} \NormalTok{(height/}\DecValTok{100}\NormalTok{) *}\StringTok{ }\NormalTok{(height/}\DecValTok{100}\NormalTok{)) %>%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{BMI =} \NormalTok{weight/sqrmetHT) %>%}\StringTok{ }
 \StringTok{    }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{BMIclass =} \KeywordTok{if_else}\NormalTok{(BMI <}\StringTok{ }\FloatTok{18.5}\NormalTok{, }\StringTok{"1. Underweight"}\NormalTok{, }\KeywordTok{if_else}\NormalTok{(BMI <}\StringTok{ }\DecValTok{25}\NormalTok{, }
         \StringTok{"2. Normal"}\NormalTok{, }\KeywordTok{if_else}\NormalTok{(BMI <}\StringTok{ }\DecValTok{30}\NormalTok{, }\StringTok{"3. Overweight"}\NormalTok{, }\StringTok{"4. Obese"}\NormalTok{, }\StringTok{"Missing"}\NormalTok{), }
@@ -230,13 +229,13 @@ individuals?}\label{what-is-the-average-bmi-for-these-individuals}
 Answer: The mean BMI is 24.7009556.
 \end{quote}
 
-\subparagraph{7. How do these individuals fall into the BMI categories
-(what are the frequencies and relative
-\%'s)?}\label{how-do-these-individuals-fall-into-the-bmi-categories-what-are-the-frequencies-and-relative-s}
+\subsection{Question 7:}\label{question-7}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{# Use janitor tably() and knitr kable() functions to make it pretty}
+\CommentTok{# 7. How do these individuals fall into the BMI categories (what are the}
+\CommentTok{# frequencies and relative %’s)? Use janitor tably() and knitr kable()}
+\CommentTok{# functions to make it pretty}
 \NormalTok{davisBMI %>%}\StringTok{ }\NormalTok{janitor::}\KeywordTok{tabyl}\NormalTok{(BMIclass) %>%}\StringTok{ }\NormalTok{knitr::}\KeywordTok{kable}\NormalTok{()}
 \end{Highlighting}
 \end{Shaded}
@@ -255,19 +254,44 @@ BMIclass & n & percent\tabularnewline
 
 \section{Graphs with ggplot2}\label{graphs-with-ggplot2}
 
-\subparagraph{8. Create a histogram of
-BMI.}\label{create-a-histogram-of-bmi.}
+\subsection{Question 8:}\label{question-8}
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{davisBMI %>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(!}\KeywordTok{is.na}\NormalTok{(BMI)) %>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(BMI <}\StringTok{ }\DecValTok{50}\NormalTok{) %>%}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(BMI), }\DataTypeTok{show.legend =} \OtherTok{FALSE}\NormalTok{, }
-    \DataTypeTok{caption =} \StringTok{"BMI Histogram"}\NormalTok{) +}\StringTok{ }\KeywordTok{geom_histogram}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{y =} \NormalTok{..density..), }\DataTypeTok{colour =} \StringTok{"black"}\NormalTok{, }
-    \DataTypeTok{fill =} \StringTok{"yellow"}\NormalTok{, }\DataTypeTok{position =} \StringTok{"dodge"}\NormalTok{, }\DataTypeTok{binwidth =} \DecValTok{1}\NormalTok{) +}\StringTok{ }\KeywordTok{geom_density}\NormalTok{(}\DataTypeTok{alpha =} \FloatTok{0.2}\NormalTok{, }
-    \DataTypeTok{fill =} \StringTok{"blue"}\NormalTok{)}
+\CommentTok{# 8. Create a histogram of BMI.}
+\NormalTok{davisBMI %>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(!}\KeywordTok{is.na}\NormalTok{(BMI)) %>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(BMI <}\StringTok{ }\DecValTok{50}\NormalTok{) %>%}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(BMI)) +}\StringTok{ }
+\StringTok{    }\KeywordTok{geom_histogram}\NormalTok{(}\DataTypeTok{colour =} \StringTok{"black"}\NormalTok{, }\DataTypeTok{fill =} \StringTok{"yellow"}\NormalTok{, }\DataTypeTok{position =} \StringTok{"dodge"}\NormalTok{, }\DataTypeTok{binwidth =} \DecValTok{1}\NormalTok{) +}\StringTok{ }
+\StringTok{    }\KeywordTok{geom_vline}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{xintercept =} \KeywordTok{mean}\NormalTok{(BMI, }\DataTypeTok{na.rm =} \NormalTok{T)), }\DataTypeTok{colour =} \StringTok{"red"}\NormalTok{, }\DataTypeTok{linetype =} \StringTok{"dashed"}\NormalTok{, }
+        \DataTypeTok{size =} \DecValTok{1}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
 \includegraphics{Flynn_HW_02_files/figure-latex/histogram BMI-1.pdf}
+
+\subsection{Question 9:}\label{question-9}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# 9. Create side-by-side boxplots of BMI distribution by gender.}
+\NormalTok{davisBMI %>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(BMI <}\StringTok{ }\DecValTok{50}\NormalTok{) %>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(!}\KeywordTok{is.na}\NormalTok{(BMI)) %>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(!}\KeywordTok{is.na}\NormalTok{(sex)) %>%}\StringTok{ }
+\StringTok{    }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =} \NormalTok{sex, }\DataTypeTok{y =} \NormalTok{BMI, }\DataTypeTok{fill =} \NormalTok{sex)) +}\StringTok{ }\KeywordTok{geom_boxplot}\NormalTok{() +}\StringTok{ }\KeywordTok{guides}\NormalTok{(}\DataTypeTok{fill =} \OtherTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Flynn_HW_02_files/figure-latex/Boxplots of BMI by sex-1.pdf}
+
+\subsection{Question 10:}\label{question-10}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{davisBMI %>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(BMI <}\StringTok{ }\DecValTok{50}\NormalTok{) %>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(!}\KeywordTok{is.na}\NormalTok{(BMIclass)) %>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(!}\KeywordTok{is.na}\NormalTok{(sex)) %>%}\StringTok{ }
+\StringTok{    }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(BMIclass, }\DataTypeTok{fill =} \NormalTok{sex)) +}\StringTok{ }\KeywordTok{geom_bar}\NormalTok{(}\DataTypeTok{position =} \StringTok{"dodge"}\NormalTok{) +}\StringTok{ }\KeywordTok{scale_fill_brewer}\NormalTok{(}\DataTypeTok{palette =} \StringTok{"Set1"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Flynn_HW_02_files/figure-latex/clustered bar chart-1.pdf}
+
+\section{THE END}\label{the-end}
 
 \end{document}
 

@@ -27,6 +27,7 @@ library(janitor)
 ```
 Using dplyr
 ===========
+##Questions 1 & 2:
 
 ```{r, describing davis}
 #1. What kind of R object is the Davis dataset?
@@ -37,7 +38,10 @@ davis <- car::Davis
 #Q2: to print number of observations, use `r count(davis)`
 ```
 > Answer 1: The Davis dataset is the "`r paste(class(davis))`" class of R object.
+
 > Answer 2: There are `r paste(count(davis))` observations. 
+
+##Question 3:
 
 ```{r missing}
 #3. For reported weight, how many observations have a missing value?
@@ -46,12 +50,16 @@ repmissing <- filter(davis, is.na(repwt))
 ```
 > Answer: Reported weight has `r count(repmissing)` missing values
 
+##Question 4:
+
 ```{r complete obs}
 #4. How many observations have missing values?
 #HINT: find the complete rows... then show inline with `r completeobs`
 completeobs <- count(na.omit(davis))
 ```
 > Answer: The Davis dataset has `r completeobs` complete observations.
+
+##Question 5:
 
 ```{r female subset}
 #5. Create a subset containing only females. How many females are in this subset?
@@ -60,6 +68,8 @@ femaleset <- davis %>%
   subset(sex == "F")
 ```
 > Answer: A subset containing only females from the Davis data has `r count(femaleset)` observations. 
+
+##Question 6:
 
 ```{r, unit transformation}
 #6. What is the average BMI for these individuals?
@@ -76,6 +86,8 @@ davisBMI <- davis %>%
 ```
 > Answer: The mean BMI is `r mean(davisBMI$BMI)`.
 
+##Question 7:
+
 ```{r frequency table for BMI class}
 #7. How do these individuals fall into the BMI categories (what are the frequencies and relative %’s)?
 #Use janitor tably() and knitr kable() functions to make it pretty
@@ -86,6 +98,8 @@ davisBMI %>%
 
 Graphs with ggplot2
 ===================
+
+##Question 8:
 
 ```{r histogram BMI}
 #8. Create a histogram of BMI.
@@ -98,6 +112,8 @@ davisBMI %>%
   
 ```
 
+##Question 9:
+
 ```{r Boxplots of BMI by sex}
 #9. Create side-by-side boxplots of BMI distribution by gender.
 davisBMI %>%
@@ -106,3 +122,19 @@ davisBMI %>%
   filter(!is.na(sex)) %>%
   ggplot(aes(x=sex, y=BMI, fill=sex)) + geom_boxplot() + guides(fill=FALSE)
 ```
+
+##Question 10: 
+
+```{r clustered bar chart}
+davisBMI %>%
+  filter(BMI < 50) %>%
+  filter(!is.na(BMIclass)) %>%
+  filter(!is.na(sex)) %>%
+  ggplot(aes(BMIclass, fill = sex)) + 
+  geom_bar(position = "dodge") + 
+  scale_fill_brewer(palette = "Set1")
+```
+
+
+THE END
+=======
