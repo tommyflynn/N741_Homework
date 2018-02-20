@@ -34,8 +34,10 @@ davis <- Davis
 
 
 ##### 3. For reported weight, how many observations have a missing value?
+> Answer: Reported weight has `r na.
 
 ```{r missing, echo=FALSE}
+
 ```
 
 Must haves for any exploratory data analysis
