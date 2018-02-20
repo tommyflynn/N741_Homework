@@ -24,49 +24,85 @@ library(tidyverse)
 library(car)
 library(quantreg)
 library(janitor)
-davis <- car::Davis
 ```
-##### 1. What kind of R object is the Davis dataset?
-> Answer: The Davis dataset is the "`r paste(class(davis))`" class of R object.
+Using dplyr
+===========
 
-##### 2. How many observations are in the Davis dataset?
-> Answer: There are `r paste(count(davis))` observations. 
+```{r, describing davis}
+#1. What kind of R object is the Davis dataset?
+davis <- car::Davis
+#to print class inline, use `r paste(class(davis))`
+
+#2. How many observations are in the Davis dataset?
+#Q2: to print number of observations, use `r count(davis)`
+```
+> Answer 1: The Davis dataset is the "`r paste(class(davis))`" class of R object.
+> Answer 2: There are `r paste(count(davis))` observations. 
 
 ```{r missing}
-#Use the is.na function to filter non-missing values from the repwt variable
+#3. For reported weight, how many observations have a missing value?
+#Use the is.na function to filter non-missing values from the repwt variable, then show inline with `r count(repmissing)`
 repmissing <- filter(davis, is.na(repwt))
-#count(repmissing)
 ```
-##### 3. For reported weight, how many observations have a missing value?
 > Answer: Reported weight has `r count(repmissing)` missing values
 
-##### 4. How many observations have missing values?
 ```{r complete obs}
-#HINT: find the complete rows...
+#4. How many observations have missing values?
+#HINT: find the complete rows... then show inline with `r completeobs`
 completeobs <- count(na.omit(davis))
 ```
 > Answer: The Davis dataset has `r completeobs` complete observations.
 
-##### 5. Create a subset containing only females. How many females are in this subset?
 ```{r female subset}
+#5. Create a subset containing only females. How many females are in this subset?
+#create a subset of all female obs, print #obs inline with `r count(femaleset)
 femaleset <- davis %>%
   subset(sex == "F")
 ```
 > Answer: A subset containing only females from the Davis data has `r count(femaleset)` observations. 
 
-##### 6. What is the average BMI for these individuals?
 ```{r, unit transformation}
+#6. What is the average BMI for these individuals?
+#create a new data.fram with height unit transformation (cm -> m), calculated BMI, and categorized BMI.
 davisBMI <- davis %>%
   mutate(sqrmetHT = (height/100)*(height/100)) %>%
   mutate(BMI = weight/sqrmetHT) %>% 
-  mutate(BMIclass = if_else(BMI < 18.5, "Underweight", 
-                            if_else(BMI < 25.0, "Normal",
-                                    if_else(BMI < 30, "Overweight",
-                                            "Obese", "Missing"), 
+  mutate(BMIclass = if_else(BMI < 18.5, "1. Underweight", 
+                            if_else(BMI < 25.0, "2. Normal",
+                                    if_else(BMI < 30, "3. Overweight",
+                                            "4. Obese", "Missing"), 
                                     "Missing")))
-#mean(davisBMI$BMI)
+#Print for Q6 inline with, `r mean(davisBMI$BMI)`
 ```
 > Answer: The mean BMI is `r mean(davisBMI$BMI)`.
 
+```{r frequency table for BMI class}
+#7. How do these individuals fall into the BMI categories (what are the frequencies and relative %’s)?
+#Use janitor tably() and knitr kable() functions to make it pretty
+davisBMI %>%
+  janitor::tabyl(BMIclass) %>%
+  knitr::kable()
+```
 
+Graphs with ggplot2
+===================
 
+```{r histogram BMI}
+#8. Create a histogram of BMI.
+davisBMI %>%
+  filter(!is.na(BMI)) %>%
+  filter(BMI < 50) %>%
+  ggplot(aes(BMI)) + 
+  geom_histogram(colour = "black", fill = "yellow", position = "dodge", binwidth = 1) +
+  geom_vline(aes(xintercept = mean(BMI, na.rm=T)), colour = "red", linetype = "dashed", size = 1) 
+  
+```
+
+```{r Boxplots of BMI by sex}
+#9. Create side-by-side boxplots of BMI distribution by gender.
+davisBMI %>%
+  filter(BMI < 50) %>%
+  filter(!is.na(BMI)) %>%
+  filter(!is.na(sex)) %>%
+  ggplot(aes(x=sex, y=BMI, fill=sex)) + geom_boxplot() + guides(fill=FALSE)
+```
