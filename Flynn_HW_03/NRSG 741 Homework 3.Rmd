@@ -23,5 +23,7 @@ library(ggplot2); (packageVersion("ggplot2"))
 ```
 
 ```{r proof of data files}
-list.files()
+path <- "~/MiSeq_SOP"
+fastq <- list.files(path)
+fastq
 ```
