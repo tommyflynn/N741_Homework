@@ -16,14 +16,12 @@ knitr::opts_chunk$set(echo=TRUE)
 ```
 
 ```{r proof of installation}
-library(dada2); (packageVersion("dada2"))
-library(phyloseq); (packageVersion("phyloseq"))
-library(ShortRead); (packageVersion("ShortRead"))
-library(ggplot2); (packageVersion("ggplot2"))
+library(dada2); packageVersion("dada2")
+library(phyloseq); packageVersion("phyloseq")
+library(ShortRead); packageVersion("ShortRead")
+library(ggplot2); packageVersion("ggplot2")
 ```
 
 ```{r proof of data files}
-path <- "~/MiSeq_SOP"
-fastq <- list.files(path)
-fastq
+knitr::kable(list.files("./MiSeq_SOP"))
 ```
