@@ -500,7 +500,7 @@ getwd()
 path
 list.files(path)
 
-taxa <- assignTaxonomy(seqtab.nochim, "~/Documents/NRSG_741/MiSeqData/MiSeq_SOP/silva_nr_v132_train_set.fa.gz", multithread = TRUE)
+taxa <- assignTaxonomy(seqtab.nochim, "./MiSeq_SOP/silva_nr_v132_train_set.fa.gz", multithread = TRUE)
 unname(head(taxa))
 ```
 
@@ -512,7 +512,7 @@ We can also use the SILVA species assignment dataset to do exactly that, that is
 
 # Assign species
 
-taxa <- addSpecies(taxa, "~/Documents/NRSG_741/MiSeqData/MiSeq_SOP/silva_species_assignment_v132.fa.gz")
+taxa <- addSpecies(taxa, "./MiSeq_SOP/silva_species_assignment_v132.fa.gz")
 
 
 ```
@@ -561,6 +561,7 @@ Next call them up then we will use DECIPHER for multiple sequence alignment
 
 ```{r}
 library(DECIPHER)
+library(RSQLite)
 seqs <- getSequences(seqtab.nochim)
 
 # This next command will allow propagation of sequence names to the tip labels of the tree
@@ -600,29 +601,20 @@ You have to upload two items, a .fasta formatted file containing the representat
 To do this we need to work with our `dada2` output a little bit more to create the .
 
 ```{r}
-
 # create the fasta format file for piphillin
-
 fastseq <- colnames(seqtab.nochim)
 start <- as.character(seq(1:length(fastseq)))
 otustart <- paste(">otu", start, sep="")
 fsta <- c(rbind(otustart, fastseq))
 write(fsta, "example.fasta")
-
 # write out the transposed seqtab.nochim file in 
 # .csv format
-
 otulab <- paste("otu", start, seq="")
 stnct <-t(seqtab.nochim)
-
 rownames(stnct) <- otulab
 write.csv(stnct, "seqtab3.csv")
-
-
-
 # use seqtab3.csv and example.fasta 
 # as the input files for piphillin
-
 ```
 
 Once you have these two files exported, use a text editor to open the .csv file, and change the first line to start with "OTU,samplename1,samplename2,etc.".
