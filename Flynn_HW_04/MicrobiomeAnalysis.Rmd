@@ -9,7 +9,7 @@ output: html_document
 
 Many of you are here today because you have an interest in the microbiome, that "new organ" comprising the trillions of microbes that live in and on us. Today we are going to talk about how to identify these organisms isolated from a sample by sequencing a portion of the genetic material present, lining these up into counts of organisms, then using these data to summarize the microbes present in numeric or graphical fashion.
 
-Before we get to that I just have one short message: (https://www.youtube.com/watch?v=htbeJhtFAXw)[https://www.youtube.com/watch?v=htbeJhtFAXw]
+Before we get to that I just have one short message: <https://www.youtube.com/watch?v=htbeJhtFAXw>[https://www.youtube.com/watch?v=htbeJhtFAXw]
 
 We will proceed as follows:
 
@@ -21,7 +21,7 @@ We will proceed as follows:
 
 4. We will next use our "OTU table" together with data about our samples to produce numerical and visual descriptive summaries of our samples. 
 
-5. We will end by again using this "OTU table" and our sample data to develop functional profiles of our samples.
+5. We will end by again using this "AmpliconSequenceVariant" and our sample data to develop functional profiles of our samples.
 
 ## Metagenomics
 
