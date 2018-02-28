@@ -44,8 +44,8 @@ Write the R code that will make that happen.
 
 ```{r Answer 1}
 
-#Insert the code to answer the problem here.
-
+pattern <- 'o?go?'
+gsub(pattern, '.', vText)
 ```
 
 ###Section 2.

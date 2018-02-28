@@ -194,7 +194,7 @@ So let's get started now.
 
 Let's check that all is ready.
 
-```{r}
+```{r setup, include = FALSE, echo = FALSE}
 library(dada2); packageVersion("dada2")
 library(ShortRead); packageVersion("ShortRead")
 library(phyloseq); packageVersion("phyloseq")
@@ -205,7 +205,7 @@ I have also downloaded the file used in the Mothur MiSeq SOP, as well as two RDP
 
 ```{r}
 # Set the path to the data files
-path <- "~/Documents/NRSG_741/MiSeqData/MiSeq_SOP"
+path <- "./MiSeq_SOP"
 fileNames <- list.files(path)
 fileNames
 ```
@@ -226,12 +226,6 @@ fnRs <- sort(list.files(path, pattern="_R2_001.fastq", full.names=TRUE))
 # Extract sample names, assuming filenames have format: SAMPLENAME_XXX.fastq
 
 sample.names <- sapply(strsplit(basename(fnFs), "_"), `[`, 1)
-  
-  
-
-
-
-
 ```
 
 #### Important Note 3
@@ -296,7 +290,8 @@ Now filter the forward and reverse reads
 
 out <- filterAndTrim(fnFs, filtFs, fnRs, filtRs, truncLen = c(240, 160),
                      maxN=0, maxEE =c(2,2), truncQ = 2, rm.phix = TRUE,
-                     compress=TRUE, multithread=TRUE) #On Windows set multithread=FALSE
+                     compress=TRUE, multithread=TRUE) 
+#On Windows set multithread=FALSE
 
 head(out)
 
@@ -381,7 +376,9 @@ dadaFs <- dada(derepFs, err = errF, multithread = TRUE)
 dadaRs <- dada(derepRs, err = errR, multithread = TRUE)
 
 # Inspect the dada-class objects returned by the dada function
+```
 
+```{r}
 dadaFs[[1]]
 dadaRs[[1]]
 
@@ -445,7 +442,7 @@ If working with your own data you may find sequences that are much longer or muc
 #### End of Note
 
 ### Remove Chimeras
-
+![alt text][id]
 So far we have let the `dada` function remove substitution errors and indel errors, but chimeras remain. The accuracy of the sequences after denoising makes chimera identification easier than if we had done that earlier with "fuzzier" sequences because all sequences now can be exactly reconstructed as a bimera (two-parent chimera) from more abundant sequences.
 
 ```{r}
@@ -741,3 +738,5 @@ plot_bar(ps.top20, x="Day", fill="Family") + facet_wrap(~When, scales="free_x")
 ```
 
 That wraps it up for today. Next week we will show more `phyloseq` and then get into functional predictions.
+
+[id]: https://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=imgres&cd=&cad=rja&uact=8&ved=2ahUKEwjK--6ot8nZAhVPy1MKHV9IDE4QjRx6BAgAEAY&url=https%3A%2F%2Fderpibooru.org%2F571703&psig=AOvVaw1UzLFb2r8NCxdxOZkNv5rm&ust=1519935507590436
