@@ -84,8 +84,7 @@ Write the R code below to merge these 3 strings.
 
 ```{r Answer 2}
 
-#Insert the code to answer the problem here.
-
+paste(W, X, Y, Z, collapse = NULL)
 ```
 
 ###Section 3.
@@ -97,7 +96,7 @@ Suppose we want to concatenate the 3 strings we did above, but also NA. We can d
 ```{r Intro 3}
 
 paste(X, Y, Z, NA, collapse = NULL)
-str_c(X, Y, Z, NA, collapse = NULL)
+str_c(X, Y, Z, " NA", collapse = NULL)
 
 ```
 
@@ -120,8 +119,8 @@ Z <- "And the dish ran away with the spoon."
 
 ```{r Answer 3}
 
-#Insert the code to answer the problem here.
-
+paste(W, X, Y, Z, NA, collapse = NULL)
+str_c(W, X, Y, Z, " NA", collapse = NULL)
 ```
 
 ###Section 4.
@@ -141,9 +140,7 @@ last5letters
 Suppose Melinda Higgins wants to extract the last *6* letters of her name.
 
 ```{r Problem 4}
-
 herName <- "Melinda Higgins"
-
 ```
 
 Write the code below to extract the last 6 letters of her name.
@@ -151,24 +148,19 @@ Write the code below to extract the last 6 letters of her name.
 ####Answer to Problem 4.
 
 ```{r Answer 4}
-
-#Insert the code to answer the problem here.
-
+Length <- str_length(herName)
+last6letters <- str_sub(herName, Length-5, Length)
+last6letters
 ```
 
 ###Section 5
 
 Suppose I have a string and I want to split it into unique words based on the occurrence of a separator, as follows:
-
 ```{r Intro 5}
-
 myString <- "The_quick_brown_fox_jumped_over_the_lazy_dog"
-
 #the separator is the character "_"
-
 mySeparatedString <- str_split(myString, "_")
 mySeparatedString
-
 ```
 If you look in your environment you will see that `mySeparatedString` is a List of 1.
 
@@ -188,8 +180,8 @@ Split this new string into separate words:
 
 ```{r Answer 5}
 
-#Insert the code to answer the problem here.
-
+mySeparatedString <- str_split(myNewString, "_")
+mySeparatedString
 ```
 
 
@@ -221,8 +213,8 @@ Split off the first word but leave the rest intact.
 
 ```{r Answer 6}
 
-#Insert the code to answer the problem here.
-
+myNewSplitSpring <- str_split(myNewString, "_", n=2)
+myNewSplitSpring
 ```
 
 ###Section 7.
@@ -230,17 +222,13 @@ Split off the first word but leave the rest intact.
 With the `stringi` package there is functionality to count the number of words in a string.
 
 ```{r Intro 7}
-
 newString <- "The quick brown fox jumps over the lazy dog."
 stri_count_words(newString)
-
 ```
 ####Problem 7.
 
 ```{r}
-
 yourNewString <- "Now is the time for all good men to come to the aid of their country"
-
 ```
 
 Use the `stri_count_words` function as above to count the number of distinct words in `yourNewString`.
@@ -248,9 +236,7 @@ Use the `stri_count_words` function as above to count the number of distinct wor
 ####Answer 7.
 
 ```{r Answer 7}
-
-#Insert the code to answer the problem here.
-
+stri_count_words(yourNewString)
 ```
 
 ###Section 8.
@@ -276,7 +262,7 @@ nurses <-c("Nightingale", "Barton", "Dix", "Sanger", "Barton", "Woodruff", "Linc
 
 ```{r Answer 8}
 
-#Insert your code to address the problem here
+nurses[stri_duplicated(nurses)]
 
 ```
 
@@ -306,7 +292,7 @@ How can we form the string `0_1-2_3-4_5-6_7-8_9-'?
 
 ```{r Answer 9}
 
-#Insert the code to solve the problem here.
+stri_join(DIGITS, separators = c("_","-"), collapse = "")
 
 ```
 
@@ -327,9 +313,7 @@ punModified
 Using the original pun, replace `his` with `her` and ` he ` with ` she `:
 
 ```{r Problem 10}
-
 pun
-
 ```
 
 ####Answer 10 
@@ -338,6 +322,6 @@ Note that the word `head` also starts with `he` but we don't want to substitute 
 
 ```{r Answer 10}
 
-#Insert the code to answer the problem here.
-
+punModified <- stri_replace_all_fixed(pun, c("his", " he "), c("her", " she "), vectorize_all = FALSE)
+punModified
 ```
