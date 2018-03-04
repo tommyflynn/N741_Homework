@@ -442,7 +442,7 @@ If working with your own data you may find sequences that are much longer or muc
 #### End of Note
 
 ### Remove Chimeras
-![alt text][id]
+
 So far we have let the `dada` function remove substitution errors and indel errors, but chimeras remain. The accuracy of the sequences after denoising makes chimera identification easier than if we had done that earlier with "fuzzier" sequences because all sequences now can be exactly reconstructed as a bimera (two-parent chimera) from more abundant sequences.
 
 ```{r}
@@ -731,4 +731,3 @@ plot_bar(ps.top20, x="Day", fill="Family") + facet_wrap(~When, scales="free_x")
 
 That wraps it up for today. Next week we will show more `phyloseq` and then get into functional predictions.
 
-[id]: https://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=imgres&cd=&cad=rja&uact=8&ved=2ahUKEwjK--6ot8nZAhVPy1MKHV9IDE4QjRx6BAgAEAY&url=https%3A%2F%2Fderpibooru.org%2F571703&psig=AOvVaw1UzLFb2r8NCxdxOZkNv5rm&ust=1519935507590436
