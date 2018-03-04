@@ -441,6 +441,7 @@ If working with your own data you may find sequences that are much longer or muc
 
 #### End of Note
 
+
 ### Remove Chimeras
 
 So far we have let the `dada` function remove substitution errors and indel errors, but chimeras remain. The accuracy of the sequences after denoising makes chimera identification easier than if we had done that earlier with "fuzzier" sequences because all sequences now can be exactly reconstructed as a bimera (two-parent chimera) from more abundant sequences.
