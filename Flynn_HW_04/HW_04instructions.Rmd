@@ -7,11 +7,13 @@ output:
   html_document: default
 ---
 
-```{r setup chunk 0, include=FALSE}
+```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(stringr)
 library(stringi)
 ```
+_GitHub Repository:_ <https://github.com/tommyflynn/N741_Homework/tree/master/Flynn_HW_04>  
+
 
 ####Problem 1.
 
