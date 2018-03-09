@@ -12,6 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 Let's load everything in:
 
 ```{r}
+
 # Load all packages
 library(phyloseq)
 packageVersion("phyloseq")
@@ -19,10 +20,15 @@ library(ggplot2)
 packageVersion("ggplot2")
 library(RColorBrewer)
 packageVersion("RColorBrewer")
+
 #Load HMP data
 # You will need to change your path
-load("~/Downloads/HMPv35.RData")
+
+load("./HMPv35.RData")
+
 HMPv35
+
+
 ```
 
 What is in here?
@@ -36,12 +42,18 @@ summary(sample_data(HMPv35))
 Let's subset to get only samples from Stool or Palatine_Tonsils.
 
 ```{r}
+
 #Subset 
-sub <- get_variable(HMPv35, "bodysite") %in% c("Stool", "Palatine_Tonsils")
+
+sub <- get_variable(HMPv35, "HMPbodysubsite") %in% c("Stool", "Palatine_Tonsils")
+
 sample_data(HMPv35)$sub <- factor(sub)
+
 HMPv35sub <- prune_samples(sample_data(HMPv35)$sub == TRUE, HMPv35)
+
 summary(sample_data(HMPv35sub))
-#HMPv35sub
+
+HMPv35sub
 
 ```
 
@@ -66,7 +78,7 @@ theme_set(theme_bw())
 
 #The following commands plot the different diversity measures for the two different body sites.
 alpha_meas = c("Observed", "Chao1", "ACE", "Shannon", "Simpson", "InvSimpson")
-(p <- plot_richness(HMPv35sub2, "HMPbodysubsite", measures=alpha_meas))
+(p <- plot_richness(HMPv35sub, "HMPbodysubsite", measures=alpha_meas))
 
 ```
 
@@ -129,7 +141,7 @@ HMPv35subr  <- transform_sample_counts(HMPv35subsub, function(x) x / sum(x) )
 HMPv35subfr <- filter_taxa(HMPv35subr, function(x) mean(x) > 1e-5, TRUE)
 
 
-HMPv35subfr
+#HMPv35subfr
 
 #Finally subset to only bacteria in the phylum Bacteroidetes
 
