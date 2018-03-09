@@ -4,7 +4,7 @@ author: "TommY"
 date: "3/8/2018"
 output: html_document
 ---
-
+Find the repository for this assignment on GitHub by navigating to <https://github.com/tommyflynn/N741_Homework/tree/master/Flynn_HW_05>
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 # Load all packages
@@ -14,17 +14,21 @@ library(ggplot2)
 packageVersion("ggplot2")
 library(RColorBrewer)
 packageVersion("RColorBrewer")
-
 # Load dataset by pointing to its file location
 load("./HMPv35.rda")
 ```
 
-```{r}
+```{r data summary, echo=FALSE}
 summary(sample_data(HMPv35))
 ```
 
-```{r}
+```{r subset1, echo=TRUE}
+sub <- get_variable(HMPv35, "HMPbodysubsite") %in% c("Stool", "Palatine_Tonsils")
+sample_data(HMPv35)$sub <- factor(sub)
 
+HMPv35sub <- prune_samples(sample_data(HMPv35)$sub == TRUE, HMPv35)
+
+summary(sample_data(HMPv35sub))
 ```
 
 ## Including Plots

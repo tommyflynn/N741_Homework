@@ -39,7 +39,7 @@ Let's subset to get only samples from Stool or Palatine_Tonsils.
 
 #Subset 
 
-sub <- get_variable(HMPv35, "HMPbodysubsite") %in% c("Stool", "Palatine_Tonsils")
+sub <- get_variable(HMPv35, "bodysite") %in% c("Stool", "Palatine_Tonsils")
 
 sample_data(HMPv35)$sub <- factor(sub)
 
