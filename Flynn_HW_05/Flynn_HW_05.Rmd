@@ -14,13 +14,13 @@ library(ggplot2)
 packageVersion("ggplot2")
 library(RColorBrewer)
 packageVersion("RColorBrewer")
-#Load HMP data
-# You will need to change your path
-#load("~/Downloads/HMPv35.RData")
+
+# Load dataset by pointing to its file location
+load("./HMPv35.rda")
 ```
 
 ```{r}
-
+summary(sample_data(HMPv35))
 ```
 
 ```{r}
