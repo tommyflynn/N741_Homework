@@ -1,0 +1,38 @@
+---
+title: "Flynn_HW_05"
+author: "TommY"
+date: "3/8/2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+# Load all packages
+library(phyloseq)
+packageVersion("phyloseq")
+library(ggplot2) 
+packageVersion("ggplot2")
+library(RColorBrewer)
+packageVersion("RColorBrewer")
+#Load HMP data
+# You will need to change your path
+#load("~/Downloads/HMPv35.RData")
+```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
