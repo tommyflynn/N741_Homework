@@ -24,11 +24,11 @@ HMPv35
 
 ####Problem 1
 
-Subset the HMPv35 object to obtain only the samples from Tongue_dorsum and Buccal_mucosa. Call this new object HMPv35sub2
+Subset the HMPv35 object to obtain only the samples from Tongue_dorsum. Call this new object HMPv35sub2
 
 ```{r subset, echo=TRUE}
 # Fill in your code to subset
-sub <- get_variable(HMPv35, "HMPbodysubsite") %in% c("Tongue_dorsum", "Buccal_mucosa")
+sub <- get_variable(HMPv35, "HMPbodysubsite") %in% c("Tongue_dorsum")
 sample_data(HMPv35)$sub <- factor(sub)
 # Call the new object HMPv35sub2
 HMPv35sub2 <- prune_samples(sample_data(HMPv35)$sub == TRUE, HMPv35)
@@ -43,12 +43,8 @@ Produce the geometric box plot of diversity measures for your object, HMPv35sub2
 theme_set(theme_bw())
 #The following commands plot the different diversity measures for the two different body sites.
 alpha_meas = c("Observed", "Chao1", "ACE", "Shannon", "Simpson", "InvSimpson")
-(p <- plot_richness(HMPv35sub2, "HMPbodysubsite", measures=alpha_meas) + geom_boxplot(data=p$data, aes(x=HMPbodysubsite, y=value, color=HMPbodysubsite), alpha=0.1))
+plot_richness(HMPv35sub2, "HMPbodysubsite", measures=alpha_meas) + geom_boxplot(data=p$data, aes(x=HMPbodysubsite, y=value), alpha=0.1)
 ```
-
-
-
-
 
 
 ####Problem 3
@@ -63,78 +59,39 @@ barplot(sort(taxa_sums(HMPv35sub2), TRUE)[1:N]/nsamples(HMPv35sub2), las=2)
 ```
 
 
-Let's filter OTU's a bit, throwing out rare taxa. 
-
-```{r}
-
-#The next step filters out taxa with low occurrence throughout all samples
-
-
-
-```
-
-So we have gone from 45336 taxa in 4743 in the original HMPv35 dataset
-
-to 45336 taxa in 631 samples in the Stool and Palatine Tonsil samples subset
-
-to 131 taxa in 631 samples after the two filtering steps 
-
-to 62 taxa in the phylum Bacteroidetes in 631 samples.
 
 ####Problem 4
 
 Using your HMPv35sub2 object, throw the rare taxa out of that object, then reduce to only taxa in the phylum Bacteroidetes. Call this new object HMPv35sub2frbac 
 
 ```{r rare taxa removal}
-HMPv35sub2sub = filter_taxa(HMPv35sub2, function(x) sum(x > 3) > (0.2*length(x)), prune=TRUE)
+HMPv35sub2sub = filter_taxa(HMPv35sub2, function(x) sum(x > 3) > (0.2*length(x)), TRUE)
 HMPv35sub2sub
 HMPv35sub2r  <- transform_sample_counts(HMPv35sub2sub, function(x) x / sum(x))
-class(HMPv35sub2r)
-HMPv35sub2fr <- filter_taxa(HMPv35sub2r, function(x) (mean(x) > 1e-5), TRUE)
-#HMPv35sub2frbac = subset_taxa(HMPv35sub2fr, Phylum=="Bacteroidetes")
-#HMPv35sub2frbac
+#class(HMPv35sub2r)
+HMPv35sub2fr <- filter_taxa(HMPv35sub2r, function(x) mean(x) > 1e-5, TRUE)
+HMPv35sub2frbac = subset_taxa(HMPv35sub2fr, Phylum=="Bacteroidetes")
 ```
 
-Let's look at the top taxa again in this filtered object.
-
-```{r}
-
-#Calclate number of taxa in object
-ntaxa(HMPv35subfrbac)
-
-par(mar = c(10, 4, 4, 2) + 0.1) # make more room on bottom margin
-N <- 20
-barplot(sort(taxa_sums(HMPv35subfrbac), TRUE)[1:N]/nsamples(HMPv35subfrbac), las=2)
-
-```
 
 ####Problem 5
 Using your HMPv35sub2frbac object, what is the distribution of the top 20 OTU's?
 
 ```{r}
-
-#Place your code here.
-
+ntaxa(HMPv35sub2frbac)
+par(mar = c(10, 4, 4, 2) + 0.1)
+N <- 20
+barplot(sort(taxa_sums(HMPv35sub2frbac), TRUE)[1:N]/nsamples(HMPv35sub2frbac), las=2)
 ```
 
-
-Now let's summarize this slice of data with some more graphics
-
-```{r}
-
-title = "plot_bar; by site; Bacteroidetes only"
-plot_bar(HMPv35subfrbac, "HMPbodysubsite", "Abundance", title=title)
-
-```
 
 ####Problem 6
 
 Plot sample abundance by body site for your object HMPv35sub2frbac
 
 ```{r}
-
-#Place your code for the plat here
-
+title <- "Bar Plot; by site; Bacteroidetes only"
+plot_bar(HMPv35sub2frbac, "HMPbodysubsite", "Abundance", title=title)
 ```
 
 
@@ -142,7 +99,7 @@ Let's try to see if there is something more to differentiate here beyond the bla
 
 ```{r}
 
-plot_bar(HMPv35subfrbac, "HMPbodysubsite", "Abundance", "Phylum", title=title)
+
 
 ```
 
@@ -151,9 +108,8 @@ plot_bar(HMPv35subfrbac, "HMPbodysubsite", "Abundance", "Phylum", title=title)
 You try it with your HMPv35sub2frbac object
 
 ```{r}
-
-#Place your code for your plot with family here
-
+title <- "Well, that didn't work..."
+plot_bar(HMPv35sub2frbac, "HMPbodysubsite", "Abundance", "Phylum", title=title)
 ```
 
 
@@ -162,13 +118,13 @@ We can use the techniques of network science to illustrate how similar or distan
 Using our filtered object with all phyla, we use the `plot_net` function to illustrate the "proximity" (or similarity) of samples, while denoting site and the sex of the participant.
 
 ```{r}
-plot_net(HMPv35subfr, maxdist = 0.3, color = "HMPbodysubsite", shape="sex")
+plot_net(HMPv35sub2fr, maxdist = 0.3, color = "HMPbodysubsite", shape="sex")
 ```
 
 Let's redo switching which variable is colored and which variable is differentiated by shape.
 
 ```{r}
-plot_net(HMPv35subfr, maxdist = 0.3, shape = "HMPbodysubsite", color="sex")
+plot_net(HMPv35sub2fr, maxdist = 0.3, shape = "HMPbodysubsite", color="sex")
 ```
 ####Problem 8
 
@@ -176,5 +132,6 @@ Which method of display do you like best and why?
 
 ```{r answer}
 #Place your answer here as another comment.
-# 
+# Since we only have one body site, using color to identify body site is not beneficial. Therefore, in this case, I prefer the latter method because it highlights the only differentiating node characteristic in the graph, sex. However, if we had two body sites, it would likely be more beneficial to differentiate body site by color, since that would likely be our variable of interest. In our current, single body site data subset, we could use both shape AND color to make the sex characteristic really pop out. Then, to improve the aesthetics, let's make the nodes larger, and organize it into a circle.
+plot_net(HMPv35sub2fr, maxdist = 0.3, shape = "sex", point_size = 7, color="sex", laymeth="circle")
 ```

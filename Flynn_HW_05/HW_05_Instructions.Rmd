@@ -9,9 +9,10 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Let's load everything in:
+Download the dataset from the Canvas folder. Then let's load everything in:
 
 ```{r}
+
 # Load all packages
 library(phyloseq)
 packageVersion("phyloseq")
@@ -19,10 +20,16 @@ library(ggplot2)
 packageVersion("ggplot2")
 library(RColorBrewer)
 packageVersion("RColorBrewer")
+
 #Load HMP data
+#You will need to download the data from Canvas
 # You will need to change your path
+
 load("~/Downloads/HMPv35.RData")
+
 HMPv35
+
+
 ```
 
 What is in here?
@@ -36,18 +43,24 @@ summary(sample_data(HMPv35))
 Let's subset to get only samples from Stool or Palatine_Tonsils.
 
 ```{r}
+
 #Subset 
-sub <- get_variable(HMPv35, "bodysite") %in% c("Stool", "Palatine_Tonsils")
+
+sub <- get_variable(HMPv35, "HMPbodysubsite") %in% c("Stool", "Palatine_Tonsils")
+
 sample_data(HMPv35)$sub <- factor(sub)
+
 HMPv35sub <- prune_samples(sample_data(HMPv35)$sub == TRUE, HMPv35)
+
 summary(sample_data(HMPv35sub))
-#HMPv35sub
+
+HMPv35sub
 
 ```
 
 ####Problem 1
 
-Subset the HMPv35 object to obtain only the samples from Tongue_dorsum and Bucosal_mucosa. Call this new object HMPv35sub2
+Subset the HMPv35 object to obtain only the samples from Tongue_dorsum. Call this new object HMPv35sub2
 
 ```{r}
 
@@ -66,7 +79,7 @@ theme_set(theme_bw())
 
 #The following commands plot the different diversity measures for the two different body sites.
 alpha_meas = c("Observed", "Chao1", "ACE", "Shannon", "Simpson", "InvSimpson")
-(p <- plot_richness(HMPv35sub2, "HMPbodysubsite", measures=alpha_meas))
+(p <- plot_richness(HMPv35sub, "HMPbodysubsite", measures=alpha_meas))
 
 ```
 
