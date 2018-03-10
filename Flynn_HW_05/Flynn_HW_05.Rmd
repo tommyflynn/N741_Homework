@@ -1,8 +1,10 @@
 ---
-title: "Flynn_HW_05"
-author: "TommY"
-date: "3/8/2018"
-output: html_document
+title: 'NRSG 741: Homework 05'
+author: "TommY Flynn"
+date: "3/10/2018"
+output:
+  pdf_document: default
+  html_document: default
 ---
 Find the repository for this assignment on GitHub by navigating to <https://github.com/tommyflynn/N741_Homework/tree/master/Flynn_HW_05>
 ```{r setup, include=FALSE}
@@ -19,7 +21,7 @@ load("./HMPv35.RData")
 packageVersion("phyloseq")
 packageVersion("ggplot2")
 packageVersion("RColorBrewer")
-HMPv35
+#HMPv35
 ```
 
 ####Problem 1
@@ -43,7 +45,8 @@ Produce the geometric box plot of diversity measures for your object, HMPv35sub2
 theme_set(theme_bw())
 #The following commands plot the different diversity measures for the two different body sites.
 alpha_meas = c("Observed", "Chao1", "ACE", "Shannon", "Simpson", "InvSimpson")
-plot_richness(HMPv35sub2, "HMPbodysubsite", measures=alpha_meas) + geom_boxplot(data=p$data, aes(x=HMPbodysubsite, y=value), alpha=0.1)
+(p <- plot_richness(HMPv35sub2, "HMPbodysubsite", measures=alpha_meas))
+p + geom_boxplot(data=p$data, aes(x=HMPbodysubsite, y=value), alpha=0.1)
 ```
 
 
@@ -94,15 +97,6 @@ title <- "Bar Plot; by site; Bacteroidetes only"
 plot_bar(HMPv35sub2frbac, "HMPbodysubsite", "Abundance", title=title)
 ```
 
-
-Let's try to see if there is something more to differentiate here beyond the black blobs.
-
-```{r}
-
-
-
-```
-
 ####Problem 7
 
 You try it with your HMPv35sub2frbac object
@@ -132,6 +126,12 @@ Which method of display do you like best and why?
 
 ```{r answer}
 #Place your answer here as another comment.
-# Since we only have one body site, using color to identify body site is not beneficial. Therefore, in this case, I prefer the latter method because it highlights the only differentiating node characteristic in the graph, sex. However, if we had two body sites, it would likely be more beneficial to differentiate body site by color, since that would likely be our variable of interest. In our current, single body site data subset, we could use both shape AND color to make the sex characteristic really pop out. Then, to improve the aesthetics, let's make the nodes larger, and organize it into a circle.
+# Since we only have one body site, using color to identify body site is not beneficial. 
+#Therefore, in this case, I prefer the latter method because it highlights the only 
+#differentiating node characteristic in the graph, sex. However, if we had two body sites, 
+#it would likely be more beneficial to differentiate body site by color, since that would 
+#likely be our variable of interest. In our current, single body site data subset, we could use
+#both shape AND color to make the sex characteristic really pop out. Then, to improve the
+#aesthetics, let's make the nodes larger, and organize it into a circle.
 plot_net(HMPv35sub2fr, maxdist = 0.3, shape = "sex", point_size = 7, color="sex", laymeth="circle")
 ```
