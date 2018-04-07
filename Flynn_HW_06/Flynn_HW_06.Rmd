@@ -76,44 +76,51 @@ The recommended threshold used to indicate potential clinical depression is for 
 
 
 
-1. [Model 1] Run a simple linear regression (`lm()`) for `cesd` using the `mcs` variable, which is the mental component quality of life score from the SF36.
-```{r task 1, echo=FALSE}
+###1. [Model 1] Run a simple linear regression (`lm()`) for `cesd` using the `mcs` variable, which is the mental component quality of life score from the SF36.
+```{r answer 1, echo=TRUE}
 reg1 <- lm(cesd ~ mcs, data = h1)
 summary(reg1)
+plot(cesd ~ mcs, data=h1)
+abline(a=53.902, b=-0.665)
 ```
 
 
 
-2. Write the equation of the final fitted model (i.e. what is the intercept and the slope)? Write a sentence describing the model results (interpret the intercept and slope). _NOTE: The `mcs` values range form 0 to 100 where the population norm for "normal mental health quality of life" is considered to be a 50. If you score higher than 50 on the `mcs` you have mental health better than the population and visa versa - if your `mcs` scores are less than 50 then your mental health is considered to be worse than the population norm._
+###2. Write the equation of the final fitted model (i.e. what is the intercept and the slope)? Write a sentence describing the model results (interpret the intercept and slope). 
 
-3. How much variability in the `cesd` does the `mcs` explain? (what is the R<sup>2</sup>?) Write a sentence describing how well the `mcs` does in predicting the `cesd`.
+\begin{equation}
+  cesd = 53.902 - (0.665)mcs
+\end{equation}
+__For each unit increase in `mcs`, the `cesd` score decreases by 0.665 units.__
 
-4. [Model 2] Run a second linear regression model (`lm()`) for the `cesd` putting in all of the other variables: 
-    + `age`
-    + `female`
-    + `pss_fr`
-    + `homeless`
-    + `pcs`
-    + `mcs`
+
+###3. How much variability in the `cesd` does the `mcs` explain? (what is the R<sup>2</sup>?) Write a sentence describing how well the `mcs` does in predicting the `cesd`.
+
+__46% of the variability in `cesd` is due to `mcs` (R<sup>2</sup>=0.47).__
+
+
+###4. [Model 2] Run a second linear regression model (`lm()`) for the `cesd` putting in all of the other variables:
+```{r answer 4, echo=TRUE}
+reg2 <- lm(cesd ~ age, female, pss_fr, homeless, pcs, mcs, data=h1)
     
-    + Print out the model results with the coefficients and tests and model fit statistics.
+#Print out the model results with the coefficients and tests and model fit statistics.
 
-5. Which variables are significant in the model? Write a sentence or two describing the impact of these variables for predicting depression scores (HINT: interpret the coefficient terms).
+```
 
-6. Following the example we did in class for the Prestige dataset [https://cdn.rawgit.com/vhertzb/2018week9/2f2ea142/2018week9.html?raw=true](https://cdn.rawgit.com/vhertzb/2018week9/2f2ea142/2018week9.html?raw=true), generate the diagnostic plotss for this model with these 6 predictors (e.g. get the residual plot by variables, the added-variable plots, the Q-Q plot, diagnostic plots). Also run the VIFs to check for multicollinearity issues.
+###5. Which variables are significant in the model? Write a sentence or two describing the impact of these variables for predicting depression scores (HINT: interpret the coefficient terms).
 
-7. [Model 3] Repeat Model 1 above, except this time run a logistic regression (`glm()`) to predict CESD scores => 16 (using the `cesd_gte16` as the outcome) as a function of `mcs` scores. Show a summary of the final fitted model and explain the coefficients. [**REMEMBER** to compute the Odds Ratios after you get the raw coefficient (betas)].
+###6. Following the example we did in class for the Prestige dataset [https://cdn.rawgit.com/vhertzb/2018week9/2f2ea142/2018week9.html?raw=true](https://cdn.rawgit.com/vhertzb/2018week9/2f2ea142/2018week9.html?raw=true), generate the diagnostic plotss for this model with these 6 predictors (e.g. get the residual plot by variables, the added-variable plots, the Q-Q plot, diagnostic plots). Also run the VIFs to check for multicollinearity issues.
 
-8. Use the `predict()` function like we did in class to predict CESD => 16 and compare it back to the original data. For now, use a cutoff probability of 0.5 - if the probability is > 0.5 consider this to be true and false otherwise. Like we did in class. **REMEMBER** See the R code for the class example at [https://github.com/melindahiggins2000/N741_lecture11_27March2018/blob/master/lesson11_logreg_Rcode.R](https://github.com/melindahiggins2000/N741_lecture11_27March2018/blob/master/lesson11_logreg_Rcode.R)
+###7. [Model 3] Repeat Model 1 above, except this time run a logistic regression (`glm()`) to predict CESD scores => 16 (using the `cesd_gte16` as the outcome) as a function of `mcs` scores. Show a summary of the final fitted model and explain the coefficients. [**REMEMBER** to compute the Odds Ratios after you get the raw coefficient (betas)].
+
+###8. Use the `predict()` function like we did in class to predict CESD => 16 and compare it back to the original data. For now, use a cutoff probability of 0.5 - if the probability is > 0.5 consider this to be true and false otherwise. Like we did in class. **REMEMBER** See the R code for the class example at [https://github.com/melindahiggins2000/N741_lecture11_27March2018/blob/master/lesson11_logreg_Rcode.R](https://github.com/melindahiggins2000/N741_lecture11_27March2018/blob/master/lesson11_logreg_Rcode.R)
     + How well did the model correctly predict CESD scores => 16 (indicating depression)? (make the "confusion matrix" and look at the true positives and true negatives versus the false positives and false negatives).
     
-9. Make an ROC curve plot and compute the AUC and explain if this is a good model for predicting depression or not
+###9. Make an ROC curve plot and compute the AUC and explain if this is a good model for predicting depression or not
 
-10. Make a plot showing the probability curve - put the `mcs` values on the X-axis and the probability of depression on the Y-axis. Based on this plot, do you think the `mcs` is a good predictor of depression? [**FYI** This plot is also called an "effect plot" is you're using `Rcmdr` to do these analyses.]
+###10. Make a plot showing the probability curve - put the `mcs` values on the X-axis and the probability of depression on the Y-axis. Based on this plot, do you think the `mcs` is a good predictor of depression? [**FYI** This plot is also called an "effect plot" is you're using `Rcmdr` to do these analyses.]
 
----
 
-**Use R markdown to complete your homework and show all of your code and output in your final report - Turn in a PDF of your report to Canvas. Include a link to your Github repo for Homework 6**
 
 ---
 
