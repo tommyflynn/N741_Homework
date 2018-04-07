@@ -1,14 +1,12 @@
 ---
-title: NRSG 741 Homework 6
-author:
-  - name: Tommy Flynn
-    email: tommy.flynn@emory.edu
-    affiliation: Emory University
+title: "Flynn_HW_06"
+author: "TommY"
+date: "4/7/2018"
+output:
+  pdf_document: default
+  html_document: default
 abstract: |
   Homework 6 was due on 04/06/2018, the same day as my F-31 NRSA application. I wasn't able to complete both. My apologies for being late on this assignment. I wanted to get it done anyway, so I don't get behind. Thanks.
- 
-output: rticles::plos_article
-csl: plos.csl
 ---
 
 _Find the associated GitHub Repository Here: [https://github.com/tommyflynn/N741_Homework/tree/master/Flynn_HW_06](https://github.com/tommyflynn/N741_Homework/tree/master/Flynn_HW_06)_
@@ -29,23 +27,23 @@ Only on the following variables from the HELP dataset are used for this assignme
 library(tidyverse)
 library(haven)
 helpdata <- haven::read_spss("helpmkh.sav")
-#sub1 <- helpdata %>%
- # select(age, female, pss_fr, homeless, 
-  #       pcs, mcs, cesd)
+sub1 <- helpdata %>%
+  select(age, female, pss_fr, homeless, 
+         pcs, mcs, cesd)
 
 # create a function to get the label
 # label output from the attributes() function
-#getlabel <- function(x) attributes(x)$label
+getlabel <- function(x) attributes(x)$label
 #getlabel(sub1$age)
 
 #library(purrr)
-#ldf <- purrr::map_df(sub1, getlabel) # this is a 1x15 tibble data.frame
+ldf <- purrr::map_df(sub1, getlabel) # this is a 1x15 tibble data.frame
 #t(ldf) transpose for easier reading to a 15x1 single column list
 
 # using knitr to get a table of these
 # variable names for Rmarkdown
 #library(knitr)
-#nitr::kable(t(ldf), col.names = c("Variable Label"), caption="Use these variables from HELP dataset for Homework 06")
+knitr::kable(t(ldf), col.names = c("Variable Label"), caption="Use these variables from HELP dataset for Homework 06")
 h1 <- helpdata %>%
   select(age, female, pss_fr, homeless, 
          pcs, mcs, cesd)
@@ -101,13 +99,15 @@ __46% of the variability in `cesd` is due to `mcs` (R<sup>2</sup>=0.47).__
 
 ###4. [Model 2] Run a second linear regression model (`lm()`) for the `cesd` putting in all of the other variables:
 ```{r answer 4, echo=TRUE}
-reg2 <- lm(cesd ~ age, female, pss_fr, homeless, pcs, mcs, data=h1)
+model1 <- lm(cesd ~ age + female + pss_fr + homeless + pcs + mcs, data=h1)
     
 #Print out the model results with the coefficients and tests and model fit statistics.
-
+summary(model1)
 ```
 
 ###5. Which variables are significant in the model? Write a sentence or two describing the impact of these variables for predicting depression scores (HINT: interpret the coefficient terms).
+
+__`Female, pss_fr, pcs` and `mcs` are all significantly associated with `cesd`. On average, women score higher on the `cesd` by 2.34 points, every unit increase on the physical composite score decreases the `cesd` score by 0.24, a unit increase on the mental composite score decreases `cesd` by 0.62 unites, and 1 unit increase on the social support scale decreased `cesd` by 0.26 units.__
 
 ###6. Following the example we did in class for the Prestige dataset [https://cdn.rawgit.com/vhertzb/2018week9/2f2ea142/2018week9.html?raw=true](https://cdn.rawgit.com/vhertzb/2018week9/2f2ea142/2018week9.html?raw=true), generate the diagnostic plotss for this model with these 6 predictors (e.g. get the residual plot by variables, the added-variable plots, the Q-Q plot, diagnostic plots). Also run the VIFs to check for multicollinearity issues.
 
@@ -120,8 +120,4 @@ reg2 <- lm(cesd ~ age, female, pss_fr, homeless, pcs, mcs, data=h1)
 
 ###10. Make a plot showing the probability curve - put the `mcs` values on the X-axis and the probability of depression on the Y-axis. Based on this plot, do you think the `mcs` is a good predictor of depression? [**FYI** This plot is also called an "effect plot" is you're using `Rcmdr` to do these analyses.]
 
-
-
 ---
-
-
