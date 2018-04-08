@@ -23,7 +23,6 @@ knitr::opts_chunk$set(echo = FALSE)
 
 For homework 6, we use the **HELP** (Health Evaluation and Linkage to Primary Care) Dataset.
 
-
 ### Table 1: Variable Labels for Homework 6, and Table 2: First 6 Observations ###
 _Only on the following variables from the HELP dataset are used for this assignment:_
 
@@ -56,7 +55,8 @@ kable(head(h1), caption="First six rows of the new HELP subset")
 
 ```
 
-
+  
+  
 ###1. [Model 1] Run a simple linear regression (`lm()`) for `cesd` using the `mcs` variable, which is the mental component quality of life score from the SF36.  
 
 __Anser:__  
@@ -67,19 +67,22 @@ reg1 <- lm(cesd ~ mcs, data = h1)
 summary(reg1)
 ```
 
-
+  
+  
 ###2. Write the equation of the final fitted model (i.e. what is the intercept and the slope)? Write a sentence describing the model results (interpret the intercept and slope).  
 
 __Anser:__ _For each unit increase in `mcs`, the `cesd` score decreases by 0.665 units._  
  $cesd = 53.902 - (0.665)mcs$
-
+  
+  
 ###3. How much variability in the `cesd` does the `mcs` explain? (what is the $R^2$?) Write a sentence describing how well the `mcs` does in predicting the `cesd`.
 
 __Answer:__ _47% of the variability in `cesd` is explained by `mcs`_ ($R^2=0.47$).
 
-
+  
+  
 ###4. [Model 2] Run a second linear regression model (`lm()`) for the `cesd` putting in all of the other variables:  
-```{r answer 4, echo=TRUE}
+```{r answer 4, echo=TRUE, warning=FALSE, message=FALSE}
 #Use lm() to regress all variables on cesd
 model1 <- lm(cesd ~ age + female + pss_fr + homeless + pcs + mcs, data=h1)
 #Print out the model results with the coefficients and tests and model fit statistics.
@@ -89,26 +92,82 @@ model2 <- lm(cesd ~ female + pss_fr + pcs + mcs, data=h1)
 stargazer(model1, model2, title="Comparison of 2 Regression Outputs",
            type = "text", align=TRUE)
 ```
-
+  
+  
 ###5. Which variables are significant in the model? Write a sentence or two describing the impact of these variables for predicting depression scores (HINT: interpret the coefficient terms).
 
-__Answer:__  `Female`, `pss_fr`, `pcs` _and_ `mcs` _are all significantly associated with_ `cesd`. _Based on the model with only significant predictors, on average women score higher on the_ `cesd` _by 2.29 points, every unit increase on the physical composite score decreases the_ `cesd` _score by 0.24, a unit increase on the mental composite score decreases_ `cesd` _by 0.62 unites, and 1 unit increase on the social support scale decreases_ `cesd` _by 0.27 units. Overall, this model accounts fo 52% of the variability in_ `cesd` ($R^2=0.52, p=<0.001$).
+__Answer:__  `Female`, `pss_fr`, `pcs` _and_ `mcs` _are all significantly associated with_ `cesd`. _Based on the model with only significant predictors, on average women score higher on the_ `cesd` _by 2.29 points, every unit increase on the physical composite score decreases the_ `cesd` _score by 0.24, a unit increase on the mental composite score decreases_ `cesd` _by 0.62 unites, and 1 unit increase on the social support scale decreases_ `cesd` _by 0.27 units. Overall, this model accounts fo 52% of the variability in_ `cesd` ($R^2=0.52, p=<0.001$).  
 
-###6. Following the example we did in class for the Prestige dataset [https://cdn.rawgit.com/vhertzb/2018week9/2f2ea142/2018week9.html?raw=true](https://cdn.rawgit.com/vhertzb/2018week9/2f2ea142/2018week9.html?raw=true), generate the diagnostic plotss for this model with these 6 predictors (e.g. get the residual plot by variables, the added-variable plots, the Q-Q plot, diagnostic plots). Also run the VIFs to check for multicollinearity issues.
+  
+  
+  
+###6. Generate the diagnostic plotss for this model with these 6 predictors (e.g. get the residual plot by variables, the added-variable plots, the Q-Q plot, diagnostic plots). Also run the VIFs to check for multicollinearity issues.
 ```{r task 6, echo=TRUE}
-residualPlots(model2)
-#lot(resid ~ age + female + pss_fr + homeless + pcs + mcs, data=h1)
+#residual plot on models 1 & 2
+residualPlots(model1)
+residualPlot(model2)
+#Added Variable plots for model 2
+avPlots(model2, id.n=2, id.cex=0.7)
+#Q-Q plot for model 2
+qqPlot(model2, id.n=3)
+#Any Outliers?
+outlierTest(model2)
+#Highly influential observations? Diagnostic plots:
+influenceIndexPlot(model2, id.n=3)
+#Now use VIFs to check for multicolinearity (GVIF > 4 = colinearity)
+vif(model2)
+```  
 
+  
+  
+###7. [Model 3] Repeat Model 1 above, except this time run a logistic regression (`glm()`) to predict CESD scores => 16 (using the `cesd_gte16` as the outcome) as a function of `mcs` scores. Show a summary of the final fitted model and explain the coefficients. [**REMEMBER** to compute the Odds Ratios after you get the raw coefficient (betas)].
+```{r task 7 logit 1, echo=TRUE, message=FALSE, warning=FALSE}
+logit1 <- glm(cesd_gte16 ~ mcs, data=h1, family=binomial)
+summary(logit1)
+exp(coef(logit1))
+```
+__Answer:__ $cesd.gte16 = 9.27 - 0.17(mcs)$ $(OR: 0.84, p=0)$ 
+
+
+###8. Use the `predict()` function like we did in class to predict CESD => 16 and compare it back to the original data. For now, use a cutoff probability of 0.5 - if the probability is > 0.5 consider this to be true and false otherwise. Like we did in class.
+    + How well did the model correctly predict CESD scores => 16 (indicating depression)? (make the "confusion matrix" and look at the true positives and true negatives versus the false positives and false negatives).
+```{r task 8, echo=TRUE}
+logit1.predict <- predict(logit1, newdata=h1,
+                      type="response")
+
+# plot the continuous predictor
+# for these predicted probabilities
+#plot(h1$mcs, logit1.predict)
+#table(h1$cesd_gte16, logit1.predict > 0.5)
+#t1 <- table(logit1.predict > 0.5, h1$cesd_gte16)
+#t1
+library(gmodels)
+CrossTable(h1$cesd_gte16, logit1.predict > 0.5)
 
 ```
-
-###7. [Model 3] Repeat Model 1 above, except this time run a logistic regression (`glm()`) to predict CESD scores => 16 (using the `cesd_gte16` as the outcome) as a function of `mcs` scores. Show a summary of the final fitted model and explain the coefficients. [**REMEMBER** to compute the Odds Ratios after you get the raw coefficient (betas)].
-
-###8. Use the `predict()` function like we did in class to predict CESD => 16 and compare it back to the original data. For now, use a cutoff probability of 0.5 - if the probability is > 0.5 consider this to be true and false otherwise. Like we did in class. **REMEMBER** See the R code for the class example at [https://github.com/melindahiggins2000/N741_lecture11_27March2018/blob/master/lesson11_logreg_Rcode.R](https://github.com/melindahiggins2000/N741_lecture11_27March2018/blob/master/lesson11_logreg_Rcode.R)
-    + How well did the model correctly predict CESD scores => 16 (indicating depression)? (make the "confusion matrix" and look at the true positives and true negatives versus the false positives and false negatives).
+__Answer:__ _The model actually did very well, it correctly predicted 22 cesd scores <16 and 395 scores >= 16. It incorrectly predicted 12 true as false, and 24 true as negative._
     
 ###9. Make an ROC curve plot and compute the AUC and explain if this is a good model for predicting depression or not
+```{r task 9, echo=TRUE, warning=FALSE, message=FALSE}
+library(ROCR)
+p <- predict(logit1, newdata=h1, 
+             type="response")
+pr <- prediction(p, as.numeric(h1$cesd_gte16))
+prf <- performance(pr, measure = "tpr", x.measure = "fpr")
+plot(prf)
+abline(a=0, b=1, col="red")
+auc <- performance(pr, measure = "auc")
+auc <- auc@y.values[[1]]
+auc
+```
+__Answer:__ _The area under the curve us 0.922, which is great!_
+
 
 ###10. Make a plot showing the probability curve - put the `mcs` values on the X-axis and the probability of depression on the Y-axis. Based on this plot, do you think the `mcs` is a good predictor of depression? [**FYI** This plot is also called an "effect plot" is you're using `Rcmdr` to do these analyses.]
+
+```{r task 10}
+qqplot(h1$mcs, logit1.predict)
+
+```
 
 ---
