@@ -1,7 +1,7 @@
 ---
-title: "Flynn_HW_06"
-author: "TommY"
-date: "4/7/2018"
+title: "NRSG 741 Homework 6"
+author: "TommY FLynn"
+date: "April 8^th, 2018"
 output:
   pdf_document: default
   html_document: default
@@ -12,7 +12,11 @@ abstract: |
 _Find the associated GitHub Repository Here: [https://github.com/tommyflynn/N741_Homework/tree/master/Flynn_HW_06](https://github.com/tommyflynn/N741_Homework/tree/master/Flynn_HW_06)_
 
 
-```{r setup, include=FALSE}
+```{r setup, include=FALSE, warning=FALSE, message=FALSE}
+library(purrr)
+library(haven)
+library(tidyverse)
+library(knitr)
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
@@ -24,44 +28,32 @@ For homework 6, we use the **HELP** (Health Evaluation and Linkage to Primary Ca
 Only on the following variables from the HELP dataset are used for this assignment:
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-library(tidyverse)
-library(haven)
+#load SPSS (.sav) into data.frame helpdata
 helpdata <- haven::read_spss("helpmkh.sav")
-sub1 <- helpdata %>%
-  select(age, female, pss_fr, homeless, 
-         pcs, mcs, cesd)
-
-# create a function to get the label
-# label output from the attributes() function
-getlabel <- function(x) attributes(x)$label
-#getlabel(sub1$age)
-
-#library(purrr)
-ldf <- purrr::map_df(sub1, getlabel) # this is a 1x15 tibble data.frame
-#t(ldf) transpose for easier reading to a 15x1 single column list
-
-# using knitr to get a table of these
-# variable names for Rmarkdown
-#library(knitr)
-knitr::kable(t(ldf), col.names = c("Variable Label"), caption="Use these variables from HELP dataset for Homework 06")
+#subset variables of interest in data.fram h1
+# add dichotomous variable to indicate depression for people with CESD scores >= 16 (depressed)
+# change cesd_gte16 from LOGIC(boolean) variable type to numeric coded 1=TRUE and 0=FALSE
 h1 <- helpdata %>%
   select(age, female, pss_fr, homeless, 
-         pcs, mcs, cesd)
-
-# add dichotomous variable
-# to indicate depression for
-# people with CESD scores >= 16
-
-h1 <- h1 %>%
-  mutate(cesd_gte16 = cesd >= 16)
-
-# change cesd_gte16 LOGIC variable type
-# to numeric coded 1=TRUE and 0=FALSE
-
-h1$cesd_gte16 <- as.numeric(h1$cesd_gte16)
-
-# check final data subset h1
+         pcs, mcs, cesd) %>%
+  mutate(cesd_gte16 = as.numeric(cesd >=16))
 #summary(h1)
+# create a function to pull variable names & labels from h1, use attributes()
+getlabel <- function(x) attributes(x)$label #I don't really get this part... revisit*********
+
+#create df without cesd_gte16 for tibble
+h2 <- h1 %>%
+  select(age, female, pss_fr, homeless, pcs, mcs, cesd)
+#create tibble ldf using getlabel() on h1
+ldf <- purrr::map_df(h2, getlabel)
+#"t(ldf)" will transpose the tibble for easier reading to a single column list
+
+# check final data subset h1 using knitr to get a table of variables with labels
+knitr::kable(t(ldf), col.names = c("Variable Label"), caption="Use these variables from HELP dataset for Homework 06")
+
+
+kable(head(h1), caption="First six rows of the new HELP subset")
+
 
 ```
 
