@@ -1,6 +1,6 @@
 ---
-title: "FLynn_HW_07"
-author: "TommY"
+title: "NRSG 741 Homework 7"
+author: "Tommy Flynn"
 date: "4/8/2018"
 output: html_document
 ---
@@ -14,18 +14,183 @@ library(tidyverse)
 library(reshape2)
 library(randomForestSRC)
 library(ggRandomForests)
+library(haven)
+```
+
+Problem 1 Answer
+================
+
+```{r Problem 1, echo=TRUE}
+#read in dataset to helpdata df
+helpdata <- read_spss("helpmkh.sav")
+
+#Let's do it all in one go...
+h1 <- helpdata %>%
+  select(age, female, pss_fr, homeless, 
+         pcs, mcs, cesd) %>%
+  mutate(cesd_16 = as.numeric(cesd >= 16), mcs_45 = as.numeric(mcs < 45))
+
+# fit a regression tree model to the cesd as the outcome
+# and using the mcs as the only predictor
+fitmcs <- rpart(mcs ~ cesd, data = h1)
+printcp(fitmcs) # Display the results
+plotcp(fitmcs, main = "Cross-Validation Plot") # Visualize cross-validation results
+# plot tree
+plot(fitmcs, uniform = TRUE, compress = FALSE, main = "MCS Regression Tree")
+text(fitmcs, use.n = TRUE, all = TRUE, cex = 0.5)
+```
+
+Problem 2 Answer
+================
+
+```{r Problem 2, echo=TRUE}
+# all vars except the dichotomous cesd_gte16 and mcs_lt45
+h1a <- h1 %>%
+  select(1:7)
+
+# Melt the other variables down and link to cesd
+h1m <- melt(h1a, id.vars = "mcs")
+
+# Plot panels for each covariate
+ggplot(h1m, aes(x=mcs, y=value)) +
+  geom_point(alpha=0.4)+
+  scale_color_brewer(palette="Set2")+
+  facet_wrap(~variable, scales="free_y", ncol=3)
 ```
 
 
-```{r }
+Problem 3 Answer
+================
+
+```{r Problem 3, echo=TRUE}
+#regression tree of mcs with all other variables
+fitall <- rpart(mcs ~ ., data = h1a)
+#print the results
+printcp(fitall)
+# Visualize cross-validation results
+plotcp(fitall, main="Cross-Validation Plot") 
+# Detailed summary of fit
+summary(fitall) 
+#regression tree for mcs from all other variables
+plot(fitall, uniform = TRUE, compress = FALSE, main = "Regression Tree for MCS Scores from HELP")
+text(fitall, use.n = TRUE, all = TRUE, cex = 0.5)
+```
+
+
+
+Problem 4 Answer
+================
+
+```{r Problem 4, echo=TRUE}
+fitallp <- ctree(mcs ~ ., data = h1a)
+plot(fitallp, main = "Conditional Inference Tree for MCS")
+```
+
+
+Problem 5 Answer
+================
+
+```{r Problem 5, echo=TRUE}
+glm1 <- glm(mcs_45 ~ age + female + pss_fr + homeless + 
+              pcs + cesd, data = h1)
+summary(glm1)
+
+```
+This model is similar to the model for `CESD`, although `PCS` is not significant in this model.
+
+Problem 6 Answer
+================
+
+```{r Problem 6, echo=TRUE}
+fitk <- rpart(mcs_45 ~ age + female + pss_fr + 
+                       homeless + pcs + cesd, 
+                     method = "class", data = h1)
+#printcp(fitk)
+#plotcp(fitk)
+#summary(fitk)
+plot(fitk, uniform = TRUE, main = "Classification Tree for MCS < 45")
+text(fitk, use.n = TRUE, all = TRUE, cex = 0.8)
+```
+
+
+Problem 7 Answer
+================
+
+```{r Problem 7, echo=TRUE}
+fitallpk <- party::ctree(mcs_45 ~ age + female + pss_fr + 
+                           homeless + pcs + cesd, data = h1)
+plot(fitallpk, main = "Conditional Inference Tree for MCS < 45")
+```
+
+Problem 8 Answer
+================
+
+```{r Problem 8, echo=TRUE}
+whoNeedsTherapy <- rpart::rpart(mcs_45 ~ age + female + pss_fr + homeless + pcs + cesd, data = h1, 
+                               control = rpart.control(cp = 0.001, minbucket = 20))
+plot(as.party(whoNeedsTherapy))
+```
+
+
+Extra Credit Answer
+===================
+
+```{r Extra Credit, echo=TRUE}
+ggplot(data = h1, aes(x = cesd, y = pcs)) +
+  geom_count(aes(color = mcs_45), alpha = 0.5) +
+  geom_vline(xintercept = 24.5) +
+  geom_vline(xintercept = 41.5) +
+  geom_vline(xintercept = 11.5) +
+  geom_segment(x = 24.5, xend = 41.5, y = 60.442, yend = 11.5) +
+  annotate("rect", xmin = 0, xmax = 100, ymin = 0, ymax = 100, fill = "blue", alpha = 0.1) +
+  ggtitle("MCS < 45 Partitioned By CESD and PCS - Darker Dots Healthier")
+```
+
+
+
+Problem 9 Answer
+================
+
+```{r Problem 9, echo=TRUE}
+h1 <- as.data.frame(h1)
+set.seed(131)
+# Random Forest for the h1 dataset
+fitallrf <- rfsrc(mcs ~ age + female + pss_fr + homeless + pcs + cesd, 
+                                   data = h1, ntree = 100, tree.err=TRUE)
+# view the results
+fitallrf
+gg_e <- gg_error(fitallrf)
+plot(gg_e)
+# Plot the predicted cesd values
+plot(gg_rfsrc(fitallrf), alpha = 0.5)
+# Plot the VIMP rankins of independent variables
+plot(gg_vimp(fitallrf))
+# Select the variables
+varsel_mcs <- var.select(fitallrf)
+glimpse(varsel_mcs)
+# Save the gg_minimal_depth object for later use
+gg_md <- gg_minimal_depth(varsel_mcs)
+# Plot the object
+plot(gg_md)
+# Plot minimal depth v VIMP
+gg_mdVIMP <- gg_minimal_vimp(gg_md)
+plot(gg_mdVIMP)
+```
+
+Problem 10 Answer
+=================
+
+```{r Problem 10, echo=TRUE}
+#Create the variable dependence object from the random forest
+gg_v <- gg_variable(fitallrf)
+
+# Use the top ranked minimal depth variables only, plotted in minimal depth rank order
+xvar <- gg_md$topvars
+
+# Plot the variable list in a single panel plot
+plot(gg_v, xvar = xvar, panel = TRUE, alpha = 0.4) +
+  labs(y="Predicted MCS reading", x="")
 
 ```
 
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r , echo=FALSE}
-
-```
-
+---
