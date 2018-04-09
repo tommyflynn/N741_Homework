@@ -2,8 +2,12 @@
 title: "NRSG 741 Homework 7"
 author: "Tommy Flynn"
 date: "4/8/2018"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
+
+_Find the associated GitHub Repository Here: [https://github.com/tommyflynn/N741_Homework/tree/master/Flynn_HW_07](https://github.com/tommyflynn/N741_Homework/tree/master/Flynn_HW_07)
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, warning=FALSE, message=FALSE)
