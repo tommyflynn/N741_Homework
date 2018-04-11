@@ -1,0 +1,1387 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={NRSG 741 Homework 8},
+            pdfauthor={Tommy Flynn},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+  \title{NRSG 741 Homework 8}
+  \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+  \author{Tommy Flynn}
+  \preauthor{\centering\large\emph}
+  \postauthor{\par}
+  \predate{\centering\large\emph}
+  \postdate{\par}
+  \date{4/11/2018}
+
+
+\begin{document}
+\maketitle
+
+\section{Lesson 10}\label{lesson-10}
+
+Today we are going to learn about a few more techniques for supervised
+learning, then we will go into techniques for unsupervised learning.
+
+\subsection{More on Supervised
+Learning}\label{more-on-supervised-learning}
+
+\subsubsection{k-Nearest Neighbor
+Classification}\label{k-nearest-neighbor-classification}
+
+Another technique is the k-nearest neighbor technique, which is pretty
+intuitive. Let's say that we have some old observations with outcome
+variables and associated predictor variables. What the procedure does is
+place all of the know predictor variables out there in space, then place
+the point where the predictor variables for the new observation fall. We
+will then calculate a distance in that space between the new point and
+the other points. We will then use the k-closest observations close to
+the new point, and calculate a predicted value for the new point as an
+average of the outcome variables for those k-nearest neighbors. We
+typically use Euclidean distance for this calculation.
+
+We can use the \texttt{knn} function in the \texttt{class} package to do
+this. We will have to decide what value of k we are going to use.
+
+Let's return now to the NHANES Diabetes dataset from last week.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Create the NHANES dataset again}
+
+\NormalTok{people <-}\StringTok{ }\NormalTok{NHANES }\OperatorTok{%>%}\StringTok{ }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{select}\NormalTok{(Age, Gender, Diabetes, BMI, HHIncome, PhysActive) }
+\CommentTok{#%>% na.omit()}
+
+\KeywordTok{glimpse}\NormalTok{(people)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Observations: 10,000
+## Variables: 6
+## $ Age        <int> 34, 34, 34, 4, 49, 9, 8, 45, 45, 45, 66, 58, 54, 10...
+## $ Gender     <fct> male, male, male, male, female, male, male, female,...
+## $ Diabetes   <fct> No, No, No, No, No, No, No, No, No, No, No, No, No,...
+## $ BMI        <dbl> 32.22, 32.22, 32.22, 15.30, 30.57, 16.82, 20.64, 27...
+## $ HHIncome   <fct> 25000-34999, 25000-34999, 25000-34999, 20000-24999,...
+## $ PhysActive <fct> No, No, No, NA, No, NA, NA, Yes, Yes, Yes, Yes, Yes...
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# What is the marginal distribution of Diabetes?}
+
+\KeywordTok{tally}\NormalTok{(}\OperatorTok{~}\StringTok{ }\NormalTok{Diabetes, }\DataTypeTok{data =}\NormalTok{ people, }\DataTypeTok{format =} \StringTok{"percent"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Diabetes
+##    No   Yes  <NA> 
+## 90.98  7.60  1.42
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{(people)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "tbl_df"     "tbl"        "data.frame"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Convert back to dataframe}
+\NormalTok{people <-}\StringTok{ }\KeywordTok{as.data.frame}\NormalTok{(people)}
+\KeywordTok{glimpse}\NormalTok{(people)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Observations: 10,000
+## Variables: 6
+## $ Age        <int> 34, 34, 34, 4, 49, 9, 8, 45, 45, 45, 66, 58, 54, 10...
+## $ Gender     <fct> male, male, male, male, female, male, male, female,...
+## $ Diabetes   <fct> No, No, No, No, No, No, No, No, No, No, No, No, No,...
+## $ BMI        <dbl> 32.22, 32.22, 32.22, 15.30, 30.57, 16.82, 20.64, 27...
+## $ HHIncome   <fct> 25000-34999, 25000-34999, 25000-34999, 20000-24999,...
+## $ PhysActive <fct> No, No, No, NA, No, NA, NA, Yes, Yes, Yes, Yes, Yes...
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Convert factors to numeric - the packages just seem to work better that way}
+\NormalTok{people}\OperatorTok{$}\NormalTok{Gender <-}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(people}\OperatorTok{$}\NormalTok{Gender)}
+\NormalTok{people}\OperatorTok{$}\NormalTok{Diabetes <-}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(people}\OperatorTok{$}\NormalTok{Diabetes)}
+\NormalTok{people}\OperatorTok{$}\NormalTok{HHIncome <-}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(people}\OperatorTok{$}\NormalTok{HHIncome)}
+\NormalTok{people}\OperatorTok{$}\NormalTok{PhysActive <-}\StringTok{ }\KeywordTok{as.numeric}\NormalTok{(people}\OperatorTok{$}\NormalTok{PhysActive)}
+
+\NormalTok{people <-}\StringTok{ }\KeywordTok{na.omit}\NormalTok{(people)}
+
+\KeywordTok{glimpse}\NormalTok{(people)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Observations: 7,555
+## Variables: 6
+## $ Age        <int> 34, 34, 34, 49, 45, 45, 45, 66, 58, 54, 58, 50, 33,...
+## $ Gender     <dbl> 2, 2, 2, 1, 1, 1, 1, 2, 2, 2, 1, 2, 2, 2, 1, 1, 2, ...
+## $ Diabetes   <dbl> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, ...
+## $ BMI        <dbl> 32.22, 32.22, 32.22, 30.57, 27.24, 27.24, 27.24, 23...
+## $ HHIncome   <dbl> 6, 6, 6, 7, 11, 11, 11, 6, 12, 10, 11, 4, 6, 4, 11,...
+## $ PhysActive <dbl> 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 2, 2, 2, ...
+\end{verbatim}
+
+Now for the procedure
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Apply knn procedure to predict Diabetes}
+
+\CommentTok{# Let's try different values of k to see how that affects performance}
+\NormalTok{knn.}\DecValTok{1}\NormalTok{ <-}\StringTok{ }\KeywordTok{knn}\NormalTok{(}\DataTypeTok{train =}\NormalTok{ people, }\DataTypeTok{test =}\NormalTok{ people, }\DataTypeTok{cl =} \KeywordTok{as.numeric}\NormalTok{(people}\OperatorTok{$}\NormalTok{Diabetes), }\DataTypeTok{k =} \DecValTok{1}\NormalTok{)}
+\NormalTok{knn.}\DecValTok{3}\NormalTok{ <-}\StringTok{ }\KeywordTok{knn}\NormalTok{(}\DataTypeTok{train =}\NormalTok{ people, }\DataTypeTok{test =}\NormalTok{ people, }\DataTypeTok{cl =}\NormalTok{ people}\OperatorTok{$}\NormalTok{Diabetes, }\DataTypeTok{k =} \DecValTok{3}\NormalTok{)}
+\NormalTok{knn.}\DecValTok{5}\NormalTok{ <-}\StringTok{ }\KeywordTok{knn}\NormalTok{(}\DataTypeTok{train =}\NormalTok{ people, }\DataTypeTok{test =}\NormalTok{ people, }\DataTypeTok{cl =}\NormalTok{ people}\OperatorTok{$}\NormalTok{Diabetes, }\DataTypeTok{k =} \DecValTok{5}\NormalTok{)}
+\NormalTok{knn.}\DecValTok{20}\NormalTok{ <-}\StringTok{ }\KeywordTok{knn}\NormalTok{(}\DataTypeTok{train =}\NormalTok{ people, }\DataTypeTok{test =}\NormalTok{ people, }\DataTypeTok{cl =}\NormalTok{ people}\OperatorTok{$}\NormalTok{Diabetes, }\DataTypeTok{k =} \DecValTok{20}\NormalTok{)}
+
+\CommentTok{#knn.1}
+\end{Highlighting}
+\end{Shaded}
+
+Now let's see how well it classifies
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Calculate the percent predicted correctly}
+
+\DecValTok{100}\OperatorTok{*}\KeywordTok{sum}\NormalTok{(people}\OperatorTok{$}\NormalTok{Diabetes }\OperatorTok{==}\StringTok{ }\NormalTok{knn.}\DecValTok{1}\NormalTok{)}\OperatorTok{/}\KeywordTok{length}\NormalTok{(knn.}\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 100
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{100}\OperatorTok{*}\KeywordTok{sum}\NormalTok{(people}\OperatorTok{$}\NormalTok{Diabetes }\OperatorTok{==}\StringTok{ }\NormalTok{knn.}\DecValTok{3}\NormalTok{)}\OperatorTok{/}\KeywordTok{length}\NormalTok{(knn.}\DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 96.18795
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{100}\OperatorTok{*}\KeywordTok{sum}\NormalTok{(people}\OperatorTok{$}\NormalTok{Diabetes }\OperatorTok{==}\StringTok{ }\NormalTok{knn.}\DecValTok{5}\NormalTok{)}\OperatorTok{/}\KeywordTok{length}\NormalTok{(knn.}\DecValTok{5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 94.63931
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{100}\OperatorTok{*}\KeywordTok{sum}\NormalTok{(people}\OperatorTok{$}\NormalTok{Diabetes }\OperatorTok{==}\StringTok{ }\NormalTok{knn.}\DecValTok{20}\NormalTok{)}\OperatorTok{/}\KeywordTok{length}\NormalTok{(knn.}\DecValTok{20}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 91.52879
+\end{verbatim}
+
+We see that as k increases, the prediction worsens, but this will not
+always be the case.
+
+What about success overall?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Another way to look at success rate against increasing k}
+
+\KeywordTok{table}\NormalTok{(knn.}\DecValTok{1}\NormalTok{, people}\OperatorTok{$}\NormalTok{Diabetes)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      
+## knn.1    1    2
+##     1 6871    0
+##     2    0  684
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{table}\NormalTok{(knn.}\DecValTok{3}\NormalTok{, people}\OperatorTok{$}\NormalTok{Diabetes)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      
+## knn.3    1    2
+##     1 6807  224
+##     2   64  460
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{table}\NormalTok{(knn.}\DecValTok{5}\NormalTok{, people}\OperatorTok{$}\NormalTok{Diabetes)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##      
+## knn.5    1    2
+##     1 6800  334
+##     2   71  350
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{table}\NormalTok{(knn.}\DecValTok{20}\NormalTok{, people}\OperatorTok{$}\NormalTok{Diabetes)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       
+## knn.20    1    2
+##      1 6832  601
+##      2   39   83
+\end{verbatim}
+
+So which classifier should you choose? Well, the good news is that you
+don't have to. There is what is called an ensemble method, in which you
+run several classifiers, then take the majority vote. We are also going
+to do this over a grid covering the \emph{Age x BMI} space, so that we
+can do visualize the results from each classifier.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Create the grid}
+
+\NormalTok{ages <-}\StringTok{ }\KeywordTok{range}\NormalTok{(}\OperatorTok{~}\StringTok{ }\NormalTok{Age, }\DataTypeTok{data =}\NormalTok{ people)}
+\NormalTok{bmis <-}\StringTok{ }\KeywordTok{range}\NormalTok{(}\OperatorTok{~}\StringTok{ }\NormalTok{BMI, }\DataTypeTok{data =}\NormalTok{ people)}
+\NormalTok{res <-}\StringTok{ }\DecValTok{100}
+\NormalTok{fake_grid <-}\StringTok{ }\KeywordTok{expand.grid}\NormalTok{(}
+  \DataTypeTok{Age =} \KeywordTok{seq}\NormalTok{(}\DataTypeTok{from =}\NormalTok{ ages[}\DecValTok{1}\NormalTok{], }\DataTypeTok{to =}\NormalTok{ ages[}\DecValTok{2}\NormalTok{], }\DataTypeTok{length.out =}\NormalTok{ res),}
+  \DataTypeTok{BMI =} \KeywordTok{seq}\NormalTok{(}\DataTypeTok{from =}\NormalTok{ bmis[}\DecValTok{1}\NormalTok{], }\DataTypeTok{to =}\NormalTok{ bmis[}\DecValTok{2}\NormalTok{], }\DataTypeTok{length.out =}\NormalTok{ res))}
+
+\CommentTok{#Get the overall proportion, p, of Diabetics}
+
+\NormalTok{p <-}\StringTok{ }\KeywordTok{sum}\NormalTok{(people}\OperatorTok{$}\NormalTok{Diabetes }\OperatorTok{==}\StringTok{ }\DecValTok{2}\NormalTok{)}\OperatorTok{/}\KeywordTok{length}\NormalTok{(people}\OperatorTok{$}\NormalTok{Diabetes)}
+
+\CommentTok{# Null model prediction}
+
+\NormalTok{pred_null <-}\StringTok{ }\KeywordTok{rep}\NormalTok{(p, }\KeywordTok{nrow}\NormalTok{(fake_grid))}
+
+\CommentTok{# reinitialize the people dataset - fix Diabetes}
+\CommentTok{# back to factor of "Yes" and "No"}
+
+\CommentTok{#people <- NHANES[, c("Age", "Gender", "Diabetes", }
+\CommentTok{#                     "BMI", "HHIncome", "PhysActive")]}
+\CommentTok{#people <- na.omit(people)}
+\CommentTok{#people <- as.data.frame(people)}
+
+\NormalTok{people <-}\StringTok{ }\NormalTok{NHANES }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{select}\NormalTok{(Age, Gender, Diabetes, BMI, HHIncome, PhysActive) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{na.omit}\NormalTok{()}
+
+\NormalTok{form <-}\StringTok{ }\KeywordTok{as.formula}\NormalTok{(}\StringTok{"Diabetes ~ Age + BMI"}\NormalTok{)}
+
+\CommentTok{# Evaluate each model on each grid point}
+\CommentTok{# For the decision tree}
+
+\NormalTok{dmod_tree <-}\StringTok{ }\KeywordTok{rpart}\NormalTok{(form, }\DataTypeTok{data =}\NormalTok{ people, }
+                   \DataTypeTok{control =} \KeywordTok{rpart.control}\NormalTok{(}\DataTypeTok{cp =} \FloatTok{0.005}\NormalTok{, }\DataTypeTok{minbucket =} \DecValTok{30}\NormalTok{))}
+
+\CommentTok{# For the forest}
+
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{20371}\NormalTok{)}
+\CommentTok{#dmod_forest <- rfsrc(form, data = people, }
+\CommentTok{#                     ntree = 201, mtry = 3)}
+\CommentTok{# try with randomForest instead of randomForestSRC package}
+\KeywordTok{library}\NormalTok{(randomForest)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## randomForest 4.6-12
+\end{verbatim}
+
+\begin{verbatim}
+## Type rfNews() to see new features/changes/bug fixes.
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'randomForest'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:dplyr':
+## 
+##     combine
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:ggplot2':
+## 
+##     margin
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{dmod_forest <-}\StringTok{ }\KeywordTok{randomForest}\NormalTok{(form, }\DataTypeTok{data =}\NormalTok{ people, }
+                     \DataTypeTok{ntree =} \DecValTok{201}\NormalTok{, }\DataTypeTok{mtry =} \DecValTok{2}\NormalTok{)}
+
+\CommentTok{# Now the predictions for tree and forest}
+
+\NormalTok{pred_tree <-}\StringTok{ }\KeywordTok{predict}\NormalTok{(dmod_tree, }\DataTypeTok{newdata =}\NormalTok{ fake_grid)[, }\StringTok{"Yes"}\NormalTok{]}
+\CommentTok{# pred_tree <- predict(dmod_tree, newdata = fake_grid)[, 1]}
+\NormalTok{pred_forest <-}\StringTok{ }\KeywordTok{predict}\NormalTok{(dmod_forest, }\DataTypeTok{newdata =}\NormalTok{ fake_grid, }
+                       \DataTypeTok{type =} \StringTok{"prob"}\NormalTok{)[, }\StringTok{"Yes"}\NormalTok{]}
+
+\CommentTok{# K-nearest neighbor prediction}
+
+\NormalTok{pred_knn <-}\StringTok{ }\NormalTok{people }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{select}\NormalTok{(Age, BMI) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{knn}\NormalTok{(}\DataTypeTok{test=}\KeywordTok{select}\NormalTok{(fake_grid, Age, BMI), }\DataTypeTok{cl =}\NormalTok{ people}\OperatorTok{$}\NormalTok{Diabetes, }\DataTypeTok{k=}\DecValTok{5}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{as.numeric}\NormalTok{() }\OperatorTok{-}\StringTok{ }\DecValTok{1}
+\end{Highlighting}
+\end{Shaded}
+
+Next, we want to build a dataframe with all of these predicted models,
+then \texttt{gather()} it into a long format.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# build the data frame}
+
+\NormalTok{res <-}\StringTok{ }\NormalTok{fake_grid }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}
+    \StringTok{"Null"}\NormalTok{ =}\StringTok{ }\NormalTok{pred_null, }\StringTok{"Decision Tree"}\NormalTok{ =}\StringTok{ }\NormalTok{pred_tree,}
+    \StringTok{"Random Forest"}\NormalTok{ =}\StringTok{ }\NormalTok{pred_forest, }\StringTok{"K-nearest neighbor"}\NormalTok{ =}\StringTok{ }\NormalTok{pred_knn}
+\NormalTok{  ) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{gather}\NormalTok{(}\DataTypeTok{k=}\StringTok{"model"}\NormalTok{, }\DataTypeTok{value =} \StringTok{"y_hat"}\NormalTok{, }\OperatorTok{-}\NormalTok{Age, }\OperatorTok{-}\NormalTok{BMI)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: attributes are not identical across measure variables;
+## they will be dropped
+\end{verbatim}
+
+Next let's plot all of these
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{ggplot}\NormalTok{(}\DataTypeTok{data =}\NormalTok{ res, }\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x =}\NormalTok{ Age, }\DataTypeTok{y =}\NormalTok{ BMI)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_tile}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{fill=}\NormalTok{y_hat), }\DataTypeTok{color =} \OtherTok{NA}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_count}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{color =}\NormalTok{ Diabetes), }\DataTypeTok{alpha =} \FloatTok{0.4}\NormalTok{, }\DataTypeTok{data =}\NormalTok{ people) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_fill_gradient}\NormalTok{(}\DataTypeTok{low =} \StringTok{"white"}\NormalTok{, }\DataTypeTok{high =} \StringTok{"blue"}\NormalTok{) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_color_manual}\NormalTok{(}\DataTypeTok{values =} \KeywordTok{c}\NormalTok{(}\StringTok{"gray"}\NormalTok{, }\StringTok{"gold"}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_size}\NormalTok{(}\DataTypeTok{range =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{,}\DecValTok{2}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_x_continuous}\NormalTok{(}\DataTypeTok{expand =} \KeywordTok{c}\NormalTok{(}\FloatTok{0.02}\NormalTok{, }\DecValTok{0}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{scale_y_continuous}\NormalTok{(}\DataTypeTok{expand =} \KeywordTok{c}\NormalTok{(}\FloatTok{0.02}\NormalTok{, }\DecValTok{0}\NormalTok{)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{facet_wrap}\NormalTok{(}\OperatorTok{~}\NormalTok{model)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Flynn_Notes_11_files/figure-latex/unnamed-chunk-8-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{length}\NormalTok{(pred_knn)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 10000
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{length}\NormalTok{(pred_tree)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 10000
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{length}\NormalTok{(pred_forest)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 10000
+\end{verbatim}
+
+All of the work that we have done with trees and forests is all fine and
+good except that it assumes that your division is linear. So what do you
+do if your data look like this graph brazenly borrowed from Gareth
+James?
+
+This line is the one that is the furthest from the closest points of
+either group, and it is called the Maximal Margin Classifier, that is,
+the margins to the closest points are as large as possible for any line
+that you could draw, as so:
+
+\subsubsection{Support Vector
+Classifiers}\label{support-vector-classifiers}
+
+The goal is to create a classifier created based on a hyperplane that
+may not perfectly separate classes but does offer greater robustness to
+the effects of individual observations, and better classification of
+most of the training observations. The \emph{support vector classifier}
+does exactly that. This is sometimes called a \emph{soft margin
+classifier}
+
+Recall our MMC. It could be that a classifier like this might actually
+work - it classifies 5 wrong, but gets most right, and it should be
+fairly robust. The support vectors in this case are the dashed lines.
+The objective is to minimize prediction error, but we can allow some
+values to be on the incorrect side of the margin or even the incorrect
+side of the hyperplane. In that case the margins are considered
+``soft''.
+
+\subsubsection{Support Vector Machines}\label{support-vector-machines}
+
+All of that is fine and good, but what if we have data that look as
+follows (brazenly borrowed by Gareth James):
+
+So we will want to \emph{enlarge} our feature space by using functions
+of our features, in particular, polynomial terms, in order to develop
+these boundaries. We will do this by using what is called a
+\emph{kernel} function. The definition of a kernel is beyond the scope
+of this class. But it turns out that there are computational methods to
+produce these extended features in a computationally efficient manner,
+and that the linear SVC can be represented by these features as well.
+All of this will only involve what is called the inner product of two
+observations. For two observations X\_i and X\_\{i'\} the inner product
+is
+
+\begin{equation}
+
+
+
+<X_i, X_{i'}> = \sum_{j=1}^{p} {x_{ij}x_{i'j}}
+
+\end{equation}
+
+Let's look at an example or two. Consider the Khan dataset in the ISLR
+package. It contains expression levels for a number of genes
+corresponding to four types of small round blue cell tumors. There is a
+set of training data and a set of testing data.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Call up ISLR, which contains the dataset, and e1071, which contains the function for fitting an SVM}
+
+\KeywordTok{library}\NormalTok{(ISLR)}
+\KeywordTok{library}\NormalTok{(e1071)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'e1071'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:randomForestSRC':
+## 
+##     impute
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# What is in the Khan data set?}
+
+\KeywordTok{names}\NormalTok{(Khan)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "xtrain" "xtest"  "ytrain" "ytest"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# What are the dimensions of the objects in the Khan dataset?}
+
+\KeywordTok{dim}\NormalTok{(Khan}\OperatorTok{$}\NormalTok{xtrain)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]   63 2308
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{dim}\NormalTok{(Khan}\OperatorTok{$}\NormalTok{xtest)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]   20 2308
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{dim}\NormalTok{(Khan}\OperatorTok{$}\NormalTok{ytrain)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## NULL
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{dim}\NormalTok{(Khan}\OperatorTok{$}\NormalTok{ytest)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## NULL
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# How do the observations in the training and testing datasets distribute among the tumor type classes?}
+
+\KeywordTok{table}\NormalTok{(Khan}\OperatorTok{$}\NormalTok{ytrain)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  1  2  3  4 
+##  8 23 12 20
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{table}\NormalTok{(Khan}\OperatorTok{$}\NormalTok{ytest)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## 1 2 3 4 
+## 3 6 6 5
+\end{verbatim}
+
+We will use a support vector approach to predict tumor type from gene
+expression levels.
+
+There are a very large number of features relative to the number of
+observations. In this case, we should use a linear kernel.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Create the data frame consisting of the training data}
+
+\NormalTok{dat <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{x=}\NormalTok{Khan}\OperatorTok{$}\NormalTok{xtrain, }\DataTypeTok{y =} \KeywordTok{as.factor}\NormalTok{(Khan}\OperatorTok{$}\NormalTok{ytrain))}
+
+\CommentTok{# Run the svm() function on the training data using a linear kernel}
+
+\NormalTok{out <-}\StringTok{ }\KeywordTok{svm}\NormalTok{(y}\OperatorTok{~}\NormalTok{., }\DataTypeTok{data =}\NormalTok{ dat, }\DataTypeTok{kernel =} \StringTok{"linear"}\NormalTok{)}
+
+\CommentTok{# What is in this new object created by the svm() function?}
+
+\KeywordTok{summary}\NormalTok{(out)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## svm(formula = y ~ ., data = dat, kernel = "linear")
+## 
+## 
+## Parameters:
+##    SVM-Type:  C-classification 
+##  SVM-Kernel:  linear 
+##        cost:  1 
+##       gamma:  0.0004332756 
+## 
+## Number of Support Vectors:  58
+## 
+##  ( 20 20 11 7 )
+## 
+## 
+## Number of Classes:  4 
+## 
+## Levels: 
+##  1 2 3 4
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# How well does this SVM predict the training data?}
+
+\KeywordTok{table}\NormalTok{(out}\OperatorTok{$}\NormalTok{fitted, dat}\OperatorTok{$}\NormalTok{y)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    
+##      1  2  3  4
+##   1  8  0  0  0
+##   2  0 23  0  0
+##   3  0  0 12  0
+##   4  0  0  0 20
+\end{verbatim}
+
+We see that there are no training errors. This is not surprising, since
+the large number of features relative to observations guarantees that
+you can find any number of hyperplanes that will fully separate the
+observations.
+
+So what about the SVM's performance on the test observations?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Create the dataframe for the testing data}
+
+\NormalTok{dat.test <-}\StringTok{ }\KeywordTok{data.frame}\NormalTok{(}\DataTypeTok{x=}\NormalTok{Khan}\OperatorTok{$}\NormalTok{xtest, }\DataTypeTok{y=} \KeywordTok{as.factor}\NormalTok{(Khan}\OperatorTok{$}\NormalTok{ytest))}
+
+\CommentTok{# Use the SVM we just created to classify the test dataset}
+
+\NormalTok{pred.test <-}\StringTok{ }\KeywordTok{predict}\NormalTok{(out, }\DataTypeTok{newdata =}\NormalTok{ dat.test)}
+
+\CommentTok{# How well does this SVM do at classifying the test dataset?}
+
+\KeywordTok{table}\NormalTok{(pred.test, dat.test}\OperatorTok{$}\NormalTok{y)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##          
+## pred.test 1 2 3 4
+##         1 3 0 0 0
+##         2 0 6 2 0
+##         3 0 0 4 0
+##         4 0 0 0 5
+\end{verbatim}
+
+We see that there are 2 errors, or a 10\% error rate.
+
+\section{Unsupervised learning}\label{unsupervised-learning}
+
+For Act III today we will talk about unsupervised learning - that is we
+want to discover patterns in the data without an \emph{a priori}
+understanding of any grouping structure.
+
+There are a couple of ways to do this. We will talk about k-means
+clustering and principal components analysis (PCA).
+
+\subsection{Clustering}\label{clustering}
+
+You have probably all seen an example of an evolutionary tree -
+sometimes also called a dendogram. Although biologists will imagine that
+at each branching point there was an actual being (plant or animal), the
+descendants of whom split into groups that evolved in different
+directions. They will group similar beings close to each other, and
+not-so-similar ones at further distances. But you will note that there
+is no outcome variable - just decisions as to what is close and what is
+far with respect to relatedness.
+
+In general you can use trees to describe the similarity between objects,
+regardless of how they came to be. The tree may or may not be a
+reflection of something deeper about the objects and their relationships
+- it can just be a simple way to visualize relationships.
+
+To develop these trees from a set of numerical variables, none of which
+constitutes a \emph{response} you would need to plot the data as points
+in space then make branches based on how close together points are. This
+technique is called \emph{hierarchical clustering}.
+
+The \texttt{NCI60} dataset contains microarray gene expression levels on
+6830 genes for 68 cancer cell lines. Although cancer cell type is
+recorded, we are going to explore how the data group without considering
+this variable, then look at how closely the \emph{de novo} grouping
+compares to the cell types. The data come from the publication by Ross
+et al (Nature Genetics, 2000). The dataset is available in the
+\texttt{ISLR} package. The \texttt{ape} package contains many functions
+for phylogenetic trees.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(tidyverse)}
+\KeywordTok{library}\NormalTok{(maps)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: package 'maps' was built under R version 3.4.4
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'maps'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:purrr':
+## 
+##     map
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(ape)}
+
+\NormalTok{nci.labs <-}\StringTok{ }\NormalTok{NCI60}\OperatorTok{$}\NormalTok{labs }\CommentTok{# Labels for checking later}
+\NormalTok{nci.data <-}\StringTok{ }\NormalTok{NCI60}\OperatorTok{$}\NormalTok{data}
+
+\CommentTok{# What do the data look like?}
+\KeywordTok{dim}\NormalTok{(nci.data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]   64 6830
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{length}\NormalTok{(nci.labs)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 64
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{nci.labs[}\DecValTok{1}\OperatorTok{:}\DecValTok{4}\NormalTok{]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "CNS"   "CNS"   "CNS"   "RENAL"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{table}\NormalTok{(nci.labs)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## nci.labs
+##      BREAST         CNS       COLON K562A-repro K562B-repro    LEUKEMIA 
+##           7           5           7           1           1           6 
+## MCF7A-repro MCF7D-repro    MELANOMA       NSCLC     OVARIAN    PROSTATE 
+##           1           1           8           9           6           2 
+##       RENAL     UNKNOWN 
+##           9           1
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Scale the data before clustering}
+\NormalTok{sd.data <-}\StringTok{ }\KeywordTok{scale}\NormalTok{(nci.data)}
+
+\CommentTok{# Calculate Euclidean distance between each pair of points}
+\NormalTok{data.dist <-}\StringTok{ }\KeywordTok{dist}\NormalTok{(sd.data)}
+
+\CommentTok{# Plot the tree, default linkage is 'complete'}
+\KeywordTok{plot}\NormalTok{(}\KeywordTok{hclust}\NormalTok{(data.dist), }\DataTypeTok{labels =}\NormalTok{ nci.labs, }\DataTypeTok{main =} \StringTok{"Complete Linkage"}\NormalTok{, }\DataTypeTok{xlab =} \StringTok{""}\NormalTok{,}
+     \DataTypeTok{sub =} \StringTok{""}\NormalTok{, }\DataTypeTok{ylab =} \StringTok{""}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Flynn_Notes_11_files/figure-latex/unnamed-chunk-12-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Plot the tree, linkage is 'average'}
+\KeywordTok{plot}\NormalTok{(}\KeywordTok{hclust}\NormalTok{(data.dist), }\DataTypeTok{labels =}\NormalTok{ nci.labs, }\DataTypeTok{main =} \StringTok{"Average Linkage"}\NormalTok{, }\DataTypeTok{xlab =} \StringTok{""}\NormalTok{, }
+     \DataTypeTok{sub =} \StringTok{""}\NormalTok{, }\DataTypeTok{ylab =} \StringTok{""}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Flynn_Notes_11_files/figure-latex/unnamed-chunk-12-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Plot the tree, default linkage is 'single'}
+\KeywordTok{plot}\NormalTok{(}\KeywordTok{hclust}\NormalTok{(data.dist), }\DataTypeTok{labels =}\NormalTok{ nci.labs, }\DataTypeTok{main =} \StringTok{"Single Linkage"}\NormalTok{, }\DataTypeTok{xlab =} \StringTok{""}\NormalTok{, }
+     \DataTypeTok{sub =} \StringTok{""}\NormalTok{, }\DataTypeTok{ylab =} \StringTok{""}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Flynn_Notes_11_files/figure-latex/unnamed-chunk-12-3.pdf}
+
+How do you think these trees compare?
+
+Which one should we use?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Let's use complete linkage and cut into 4 clusters}
+
+\NormalTok{hc.out <-}\StringTok{ }\KeywordTok{hclust}\NormalTok{(}\KeywordTok{dist}\NormalTok{(sd.data))}
+\NormalTok{hc.clusters <-}\StringTok{ }\KeywordTok{cutree}\NormalTok{(hc.out, }\DecValTok{4}\NormalTok{)}
+\KeywordTok{table}\NormalTok{(hc.clusters, nci.labs)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##            nci.labs
+## hc.clusters BREAST CNS COLON K562A-repro K562B-repro LEUKEMIA MCF7A-repro
+##           1      2   3     2           0           0        0           0
+##           2      3   2     0           0           0        0           0
+##           3      0   0     0           1           1        6           0
+##           4      2   0     5           0           0        0           1
+##            nci.labs
+## hc.clusters MCF7D-repro MELANOMA NSCLC OVARIAN PROSTATE RENAL UNKNOWN
+##           1           0        8     8       6        2     8       1
+##           2           0        0     1       0        0     1       0
+##           3           0        0     0       0        0     0       0
+##           4           1        0     0       0        0     0       0
+\end{verbatim}
+
+Where are the leukemia cases? What about the breast cancer cases?
+
+Where in the tree is the cut that yielded the 4 clusters?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# plot the cut in the tree that yielded the 4 clusters}
+
+\KeywordTok{plot}\NormalTok{(hc.out, }\DataTypeTok{labels =}\NormalTok{ nci.labs)}
+\KeywordTok{abline}\NormalTok{(}\DataTypeTok{h=}\DecValTok{139}\NormalTok{, }\DataTypeTok{col =} \StringTok{"red"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Flynn_Notes_11_files/figure-latex/unnamed-chunk-14-1.pdf}
+
+Let's look at the summary of the tree:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Summary of hierarchical clustering}
+\NormalTok{hc.out}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## hclust(d = dist(sd.data))
+## 
+## Cluster method   : complete 
+## Distance         : euclidean 
+## Number of objects: 64
+\end{verbatim}
+
+\subsubsection{K-means clustering}\label{k-means-clustering}
+
+An alternative method of clustering is \emph{K-means clustering}. Again,
+we place our points in space, and decide on groups, but we do so without
+consideration of hierarchy.
+
+Let's see how these two types of clustering compare on the
+\texttt{NCI60} dataset:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# K-means clustering with K=4 (from the hierarchical clustering number)}
+
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{40523}\NormalTok{)}
+\NormalTok{km.out =}\StringTok{ }\KeywordTok{kmeans}\NormalTok{(sd.data, }\DecValTok{4}\NormalTok{, }\DataTypeTok{nstart =} \DecValTok{20}\NormalTok{)}
+\NormalTok{km.clusters =}\StringTok{ }\NormalTok{km.out}\OperatorTok{$}\NormalTok{cluster}
+\KeywordTok{table}\NormalTok{(km.clusters, hc.clusters)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##            hc.clusters
+## km.clusters  1  2  3  4
+##           1  0  0  8  0
+##           2 20  7  0  0
+##           3 11  0  0  9
+##           4  9  0  0  0
+\end{verbatim}
+
+How do the clustering methods compare?
+
+Which clusters are found by both methods?
+
+\subsubsection{Another example}\label{another-example}
+
+Let's look at another example. We have data about the cities in the
+world in the dataset\texttt{WorldCities}. For the 4000 largest cities,
+considering \emph{only} latitude and longitude (two of the
+\emph{features} of this dataset), how would these data items group and
+plot?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#get the 4000 largest cities, variables are only latitude and longitude}
+
+\NormalTok{BigCities <-}\StringTok{ }\NormalTok{world.cities }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{arrange}\NormalTok{(}\KeywordTok{desc}\NormalTok{(pop)) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{head}\NormalTok{(}\DecValTok{4000}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\NormalTok{dplyr}\OperatorTok{::}\KeywordTok{select}\NormalTok{(long, lat)}
+\KeywordTok{glimpse}\NormalTok{(BigCities)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Observations: 4,000
+## Variables: 2
+## $ long <dbl> 121.47, 72.82, 67.01, -58.37, 77.21, 120.97, 37.62, 126.9...
+## $ lat  <dbl> 31.23, 18.96, 24.86, -34.61, 28.67, 14.62, 55.75, 37.56, ...
+\end{verbatim}
+
+Notice that the \texttt{BigCities} dataset does not even contain the
+names of the cities, \emph{just} latitude and longitude.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(mclust)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Package 'mclust' version 5.4
+## Type 'citation("mclust")' for citing this R package in publications.
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'mclust'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:maps':
+## 
+##     map
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:purrr':
+## 
+##     map
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{set.seed}\NormalTok{(}\DecValTok{15}\NormalTok{)}
+\NormalTok{city_clusts <-}\StringTok{ }\NormalTok{BigCities }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{kmeans}\NormalTok{(}\DataTypeTok{centers =} \DecValTok{6}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{fitted}\NormalTok{(}\StringTok{"classes"}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{as.character}\NormalTok{()}
+\NormalTok{BigCities <-}\StringTok{ }\NormalTok{BigCities }\OperatorTok{%>%}\StringTok{ }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{cluster =}\NormalTok{ city_clusts)}
+\NormalTok{BigCities }\OperatorTok{%>%}\StringTok{ }\KeywordTok{ggplot}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{x=}\NormalTok{long, }\DataTypeTok{y=}\NormalTok{lat)) }\OperatorTok{+}
+\StringTok{  }\KeywordTok{geom_point}\NormalTok{(}\KeywordTok{aes}\NormalTok{(}\DataTypeTok{color =}\NormalTok{ cluster), }\DataTypeTok{alpha =} \FloatTok{0.5}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Flynn_Notes_11_files/figure-latex/unnamed-chunk-18-1.pdf}
+
+\subsubsection{Principal Components
+Analysis}\label{principal-components-analysis}
+
+Another way to learn more about the data is to reduce dimensionality. If
+you have ever had a course in matrix algebra, one technique to reduce
+the dimensionality of a matrix is called \emph{Singular Value
+Decomposition} (SVD). Of course in statistics (unlike in mathematics)
+data are typically messy, and so we use a tool called \emph{Principal
+Components Analysis} (PCA) which is, at its core, just SVD.
+
+Let's set the stage with an example. Suppose we have the heights of 100
+pairs of twins (or, if you prefer, suppose you have the expression
+levels of 2 genes for 100 samples). Let's plot them:
+
+You will notice that the data live in two dimensions, but they appear to
+be somewhat linear. We can \emph{rotate} this plot so that it makes a
+bit more sense, but taking the average of the twin heights and plotting
+it against the difference of the heights. Let's take a look:
+
+The two orange points are the same in each plot, and you will note that
+the rotation preserves the distance between them.
+
+Now suppose you have expression levels for 1000 genes, and you want to
+look at their plots. You can't visualize this in 1000 x 1000 space, and
+if you do them pairwise you will need to examine almost 500,000 graphs.
+This is just too much. Plus not all of the variables are, well,
+interesting. So we want to reduce the dimensions.
+
+One other thing to notice about the rotated graph: Most of the
+``action'' is in the first dimension. This is the point, if you will, of
+PCA. It allows us to summarize our data (our features, our variables)
+with a smaller number of related variables that explain most of the
+variability of our original data. That is, PCA gives you a
+low-dimensional transformation of the data set such that these
+components contain as much as possible of the variation. It gives you a
+data representation in a smaller number of dimensions that are as
+``interesting''" as possible. By \emph{interesting} we mean here the
+amount of variations of the observations in each dimension.
+
+Just as we did with the example above, we seek a normalized, linear
+combination of our features that has the highest variance, then the next
+highest, etc.
+
+Let's work through an example, continuing our work with the NCI60
+dataset:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Find the principal components of the normalized data}
+\NormalTok{pr.out <-}\StringTok{ }\KeywordTok{prcomp}\NormalTok{(nci.data, }\DataTypeTok{scale =} \OtherTok{TRUE}\NormalTok{)}
+
+\CommentTok{# Color assignment for each of the 64 cell lines}
+\NormalTok{Cols <-}\StringTok{ }\ControlFlowTok{function}\NormalTok{(vec)\{}
+\NormalTok{  cols=}\KeywordTok{rainbow}\NormalTok{(}\KeywordTok{length}\NormalTok{(}\KeywordTok{unique}\NormalTok{(vec)))}
+  \KeywordTok{return}\NormalTok{(cols[}\KeywordTok{as.numeric}\NormalTok{(}\KeywordTok{as.factor}\NormalTok{(vec))])}
+\NormalTok{\}}
+\CommentTok{# Plot the principal component score vectors}
+\KeywordTok{par}\NormalTok{(}\DataTypeTok{mfrow =} \KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{), }\DataTypeTok{pin=}\KeywordTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{,}\DecValTok{3}\NormalTok{))}
+\KeywordTok{plot}\NormalTok{(pr.out}\OperatorTok{$}\NormalTok{x[, }\DecValTok{1}\OperatorTok{:}\DecValTok{2}\NormalTok{], }\DataTypeTok{col =} \KeywordTok{Cols}\NormalTok{(nci.labs), }\DataTypeTok{pch=}\DecValTok{19}\NormalTok{, }\DataTypeTok{xlab=} \StringTok{"Z1"}\NormalTok{, }\DataTypeTok{ylab =} \StringTok{"Z2"}\NormalTok{)}
+\KeywordTok{plot}\NormalTok{(pr.out}\OperatorTok{$}\NormalTok{x[, }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{3}\NormalTok{)], }\DataTypeTok{col =} \KeywordTok{Cols}\NormalTok{(nci.labs), }\DataTypeTok{pch=}\DecValTok{19}\NormalTok{, }\DataTypeTok{xlab=} \StringTok{"Z1"}\NormalTok{, }\DataTypeTok{ylab =} \StringTok{"Z3"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Flynn_Notes_11_files/figure-latex/unnamed-chunk-19-1.pdf}
+
+These color plots aren't really all that interesting nor are they
+particularly informative.
+
+But wait, there's more!
+
+Each component has a value associated with it that is the percent of
+variance explained (PVE).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# See what all is in the object}
+\KeywordTok{summary}\NormalTok{(pr.out)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Importance of components:
+##                            PC1      PC2      PC3      PC4      PC5
+## Standard deviation     27.8535 21.48136 19.82046 17.03256 15.97181
+## Proportion of Variance  0.1136  0.06756  0.05752  0.04248  0.03735
+## Cumulative Proportion   0.1136  0.18115  0.23867  0.28115  0.31850
+##                             PC6      PC7      PC8      PC9     PC10
+## Standard deviation     15.72108 14.47145 13.54427 13.14400 12.73860
+## Proportion of Variance  0.03619  0.03066  0.02686  0.02529  0.02376
+## Cumulative Proportion   0.35468  0.38534  0.41220  0.43750  0.46126
+##                            PC11     PC12     PC13     PC14     PC15
+## Standard deviation     12.68672 12.15769 11.83019 11.62554 11.43779
+## Proportion of Variance  0.02357  0.02164  0.02049  0.01979  0.01915
+## Cumulative Proportion   0.48482  0.50646  0.52695  0.54674  0.56590
+##                            PC16     PC17     PC18     PC19    PC20
+## Standard deviation     11.00051 10.65666 10.48880 10.43518 10.3219
+## Proportion of Variance  0.01772  0.01663  0.01611  0.01594  0.0156
+## Cumulative Proportion   0.58361  0.60024  0.61635  0.63229  0.6479
+##                            PC21    PC22    PC23    PC24    PC25    PC26
+## Standard deviation     10.14608 10.0544 9.90265 9.64766 9.50764 9.33253
+## Proportion of Variance  0.01507  0.0148 0.01436 0.01363 0.01324 0.01275
+## Cumulative Proportion   0.66296  0.6778 0.69212 0.70575 0.71899 0.73174
+##                           PC27   PC28    PC29    PC30    PC31    PC32
+## Standard deviation     9.27320 9.0900 8.98117 8.75003 8.59962 8.44738
+## Proportion of Variance 0.01259 0.0121 0.01181 0.01121 0.01083 0.01045
+## Cumulative Proportion  0.74433 0.7564 0.76824 0.77945 0.79027 0.80072
+##                           PC33    PC34    PC35    PC36    PC37    PC38
+## Standard deviation     8.37305 8.21579 8.15731 7.97465 7.90446 7.82127
+## Proportion of Variance 0.01026 0.00988 0.00974 0.00931 0.00915 0.00896
+## Cumulative Proportion  0.81099 0.82087 0.83061 0.83992 0.84907 0.85803
+##                           PC39    PC40    PC41   PC42    PC43   PC44
+## Standard deviation     7.72156 7.58603 7.45619 7.3444 7.10449 7.0131
+## Proportion of Variance 0.00873 0.00843 0.00814 0.0079 0.00739 0.0072
+## Cumulative Proportion  0.86676 0.87518 0.88332 0.8912 0.89861 0.9058
+##                           PC45   PC46    PC47    PC48    PC49    PC50
+## Standard deviation     6.95839 6.8663 6.80744 6.64763 6.61607 6.40793
+## Proportion of Variance 0.00709 0.0069 0.00678 0.00647 0.00641 0.00601
+## Cumulative Proportion  0.91290 0.9198 0.92659 0.93306 0.93947 0.94548
+##                           PC51    PC52    PC53    PC54    PC55    PC56
+## Standard deviation     6.21984 6.20326 6.06706 5.91805 5.91233 5.73539
+## Proportion of Variance 0.00566 0.00563 0.00539 0.00513 0.00512 0.00482
+## Cumulative Proportion  0.95114 0.95678 0.96216 0.96729 0.97241 0.97723
+##                           PC57   PC58    PC59    PC60    PC61    PC62
+## Standard deviation     5.47261 5.2921 5.02117 4.68398 4.17567 4.08212
+## Proportion of Variance 0.00438 0.0041 0.00369 0.00321 0.00255 0.00244
+## Cumulative Proportion  0.98161 0.9857 0.98940 0.99262 0.99517 0.99761
+##                           PC63      PC64
+## Standard deviation     4.04124 2.148e-14
+## Proportion of Variance 0.00239 0.000e+00
+## Cumulative Proportion  1.00000 1.000e+00
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(pr.out)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Flynn_Notes_11_files/figure-latex/unnamed-chunk-20-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pve =}\StringTok{ }\DecValTok{100}\OperatorTok{*}\NormalTok{pr.out}\OperatorTok{$}\NormalTok{sdev}\OperatorTok{^}\DecValTok{2}\OperatorTok{/}\KeywordTok{sum}\NormalTok{(pr.out}\OperatorTok{$}\NormalTok{sdev}\OperatorTok{^}\DecValTok{2}\NormalTok{)}
+\NormalTok{pve}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] 1.135894e+01 6.756203e+00 5.751842e+00 4.247554e+00 3.734972e+00
+##  [6] 3.618630e+00 3.066222e+00 2.685903e+00 2.529498e+00 2.375869e+00
+## [11] 2.356558e+00 2.164122e+00 2.049097e+00 1.978818e+00 1.915417e+00
+## [16] 1.771761e+00 1.662730e+00 1.610759e+00 1.594333e+00 1.559919e+00
+## [21] 1.507217e+00 1.480099e+00 1.435762e+00 1.362771e+00 1.323502e+00
+## [26] 1.275199e+00 1.259037e+00 1.209794e+00 1.180988e+00 1.120982e+00
+## [31] 1.082774e+00 1.044775e+00 1.026471e+00 9.882745e-01 9.742571e-01
+## [36] 9.311145e-01 9.147953e-01 8.956409e-01 8.729506e-01 8.425758e-01
+## [41] 8.139798e-01 7.897498e-01 7.390010e-01 7.201016e-01 7.089184e-01
+## [46] 6.902723e-01 6.784953e-01 6.470130e-01 6.408838e-01 6.011935e-01
+## [51] 5.664186e-01 5.634028e-01 5.389352e-01 5.127863e-01 5.117962e-01
+## [56] 4.816201e-01 4.384987e-01 4.100561e-01 3.691390e-01 3.212249e-01
+## [61] 2.552891e-01 2.439782e-01 2.391163e-01 6.756902e-30
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(pve, }\DataTypeTok{type =} \StringTok{"o"}\NormalTok{, }\DataTypeTok{ylab =} \StringTok{"Cumulative PVE"}\NormalTok{, }\DataTypeTok{xlab =} \StringTok{"Principal Component"}\NormalTok{, }\DataTypeTok{col=}\StringTok{"blue"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Flynn_Notes_11_files/figure-latex/unnamed-chunk-20-2.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(}\KeywordTok{cumsum}\NormalTok{(pve), }\DataTypeTok{type =} \StringTok{"o"}\NormalTok{, }\DataTypeTok{ylab =} \StringTok{"Cumulative PVE"}\NormalTok{, }\DataTypeTok{xlab =} \StringTok{"Principal Component"}\NormalTok{, }\DataTypeTok{col=}\StringTok{"brown3"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Flynn_Notes_11_files/figure-latex/unnamed-chunk-20-3.pdf}
+
+You will notice from the first plot that there is a drop-off (elbow) in
+PVE from component 6 to 7. Also you will notice in the histogram that
+there is a substantial dropoff in PVE going from component 1 to 2. So
+you can safely reduce this dataset to representation by at most 6
+components, and if you feel like living dangerously, to 2 components.
+These are called scree plots. You should definitely look at these scree
+plots as you evaluate the results of a principal components analysis,
+and you should ask to see them as well for any that you happen upon in
+your reading.
+
+\section{Multi-dimensional scaling}\label{multi-dimensional-scaling}
+
+Another unsupervised learning technique is Multi-dimensional Scaling
+(MDS). We want to know about differences between observations. So, for
+instance, let's consider the Khan dataset again. We are going to take
+differences of the individual observations and the overall mean, then we
+are going to use PCA again to examine the results. Except, since we are
+doing this on the observation - mean differences, it is no longer
+strictly PCA, and it is not called \emph{Principal Coordinate Analysis}
+or PCoA. But the principles from PCA are still useful - we are going to
+use the first two principal \emph{coordinates} to plot, because those
+will capture most of the variability in these differences.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Use the nci.data set again}
+\CommentTok{# Assume we have N observations and p variables in an N x P dataset}
+\KeywordTok{dim}\NormalTok{(nci.data)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1]   64 6830
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d <-}\StringTok{ }\KeywordTok{dist}\NormalTok{(nci.data)}
+\NormalTok{fit <-}\StringTok{ }\KeywordTok{cmdscale}\NormalTok{(d, }\DataTypeTok{eig=}\OtherTok{TRUE}\NormalTok{, }\DataTypeTok{k=}\DecValTok{2}\NormalTok{)}
+\CommentTok{# k is the number of principal coordinates we want}
+\CommentTok{# view the results}
+\CommentTok{#fit}
+\CommentTok{# plot it}
+\NormalTok{x <-}\StringTok{ }\NormalTok{fit}\OperatorTok{$}\NormalTok{points[,}\DecValTok{1}\NormalTok{]}
+\NormalTok{y <-}\StringTok{ }\NormalTok{fit}\OperatorTok{$}\NormalTok{points[,}\DecValTok{2}\NormalTok{]}
+\KeywordTok{plot}\NormalTok{(x, y, }\DataTypeTok{xlab =} \StringTok{"PCo1"}\NormalTok{, }\DataTypeTok{ylab =} \StringTok{"PCo2"}\NormalTok{,}
+     \DataTypeTok{main =} \StringTok{"Metric MDS"}\NormalTok{, }\DataTypeTok{type =} \StringTok{"n"}\NormalTok{)}
+\KeywordTok{text}\NormalTok{(x, y, }\DataTypeTok{labels =}\NormalTok{ nci.labs, }\DataTypeTok{cex =} \FloatTok{0.7}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Flynn_Notes_11_files/figure-latex/unnamed-chunk-21-1.pdf}
+
+We can also do what is called nonmetric MDS, using a function from the
+MASS package.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(MASS)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'MASS'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:dplyr':
+## 
+##     select
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fit <-}\StringTok{ }\KeywordTok{isoMDS}\NormalTok{(d, }\DataTypeTok{k=}\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## initial  value 30.903164 
+## iter   5 value 20.778162
+## iter   5 value 20.760297
+## iter   5 value 20.750556
+## final  value 20.750556 
+## converged
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\NormalTok{fit}\OperatorTok{$}\NormalTok{points[,}\DecValTok{1}\NormalTok{]}
+\NormalTok{y <-}\StringTok{ }\NormalTok{fit}\OperatorTok{$}\NormalTok{points[,}\DecValTok{2}\NormalTok{]}
+\KeywordTok{plot}\NormalTok{(x, y, }\DataTypeTok{xlab =} \StringTok{"PCo1"}\NormalTok{, }\DataTypeTok{ylab =} \StringTok{"PCo2"}\NormalTok{,}
+     \DataTypeTok{main =} \StringTok{"nonMetric MDS"}\NormalTok{, }\DataTypeTok{type =} \StringTok{"n"}\NormalTok{)}
+\KeywordTok{text}\NormalTok{(x, y, }\DataTypeTok{labels =}\NormalTok{ nci.labs, }\DataTypeTok{cex =} \FloatTok{0.7}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Flynn_Notes_11_files/figure-latex/unnamed-chunk-22-1.pdf}
+
+
+\end{document}
