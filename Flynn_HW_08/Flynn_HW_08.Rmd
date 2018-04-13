@@ -1,5 +1,5 @@
 ---
-title: "NRSG 741 Homework 8"
+title: "NRSG 741 Homework 8.2"
 author: "Tommy Flynn"
 date: "4/11/2018"
 output:
@@ -25,15 +25,14 @@ K-nearest neighbor
 Let's try a variation on the NHANES data set again.
   
 ```{r, echo=TRUE}
-# Create the NHANES dataset again
-people <- NHANES %>% dplyr::select(Age, Gender, Diabetes, BMI, HHIncome, PhysActive, SleepTrouble)%>%
-  mutate(Gender = as.numeric(Gender), Diabetes = as.numeric(Diabetes), BMI,HHIncome = as.numeric(HHIncome),PhysActive = as.numeric(PhysActive)) %>%
-  filter(!is.na(Age), !is.na(Gender), !is.na(Diabetes), !is.na(BMI), !is.na(HHIncome), !is.na(PhysActive), !is.na(SleepTrouble))
+# Create the NHANES dataset with SleepTrouble, change Yes/No to 1/0 numeric, and filter out NA
 lut <- c("Yes" = "1", "No" = "0")
-people$SleepTrouble <- as.numeric(lut[people$SleepTrouble])
+people <- NHANES %>% dplyr::select(Age, Gender, BMI, HHIncome, PhysActive, SleepTrouble) %>%
+  mutate(Gender = as.numeric(Gender),HHIncome = as.numeric(HHIncome), PhysActive = as.numeric(PhysActive), SleepTrouble =                                  as.numeric(lut[SleepTrouble])) %>%
+  filter(!is.na(Age), !is.na(Gender), !is.na(BMI), !is.na(HHIncome), !is.na(PhysActive), !is.na(SleepTrouble))
 
 #check the subset
-glimpse(people)
+knitr::kable(summary(people), caption = "Summary of People Data Subset with SleepTrouble")
 ```
 Create the NHANES dataset again, just like we did in class, only using sleep trouble (variable name = SleepTrouble) as the dependent variable, instead of SleepTrouble. (I'm assuming you meann instead of Diabetes?) 
   
@@ -42,7 +41,7 @@ Problem 1
 What is the marginal distribution of sleep trouble?
 ```{r Problem 1}
 # What is the marginal distribution of sleep trouble?
-knitr::kable(tally(~ SleepTrouble, data = people, format = "percent"))
+knitr::kable(tally(~ SleepTrouble, data = people, format = "percent"), caption = "Marginal Distribution of SleepTrouble")
 ```
 
 
